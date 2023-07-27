@@ -1,6 +1,12 @@
 FROM alpine:3.18 as builder
 
-RUN apk add --no-cache build-base
+RUN apk add --no-cache build-base curl git python3
+
+RUN python3 -m ensurepip && \
+    rm -r /usr/lib/python*/ensurepip && \
+    pip3 install --upgrade pip setuptools
+
+RUN pip3 install clang-format
 
 WORKDIR /rom
 
