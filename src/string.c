@@ -12,16 +12,14 @@
  ***************************************************************************/
 
 
-#if defined(macintosh)
-#include <types.h>
-#else
 #include <sys/types.h>
-#endif
+#include <stdbool.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
 #include "merc.h"
 
 
@@ -70,7 +68,7 @@ void string_append( CHAR_DATA *ch, char **pString )
         *pString = str_dup( "" );
     }
     send_to_char( *pString, ch );
-    
+
     if ( *(*pString + strlen( *pString ) - 1) != '\r' )
     send_to_char( "\n\r", ch );
 
@@ -168,7 +166,7 @@ void string_add( CHAR_DATA *ch, char *argument )
             send_to_char( "String formatted.\n\r", ch );
             return;
         }
-        
+
         if ( !str_cmp( arg1, ".h" ) )
         {
             send_to_char( "Sedit help (commands on blank line):   \n\r", ch );
@@ -181,7 +179,7 @@ void string_add( CHAR_DATA *ch, char *argument )
             send_to_char( "@                - end string          \n\r", ch );
             return;
         }
-            
+
 
         send_to_char( "SEdit:  Invalid dot command.\n\r", ch );
         return;
@@ -239,11 +237,11 @@ char *format_string( char *oldstring /*, bool fSpace */)
   char *rdesc;
   int i=0;
   bool cap=TRUE;
-  
+
   xbuf[0]=xbuf2[0]=0;
-  
+
   i=0;
-  
+
   for (rdesc = oldstring; *rdesc; rdesc++)
   {
     if (*rdesc=='\n')
@@ -265,7 +263,7 @@ char *format_string( char *oldstring /*, bool fSpace */)
     }
     else if (*rdesc==')')
     {
-      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' && 
+      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' &&
           (xbuf[i-3]=='.' || xbuf[i-3]=='?' || xbuf[i-3]=='!'))
       {
         xbuf[i-2]=*rdesc;
@@ -280,7 +278,7 @@ char *format_string( char *oldstring /*, bool fSpace */)
       }
     }
     else if (*rdesc=='.' || *rdesc=='?' || *rdesc=='!') {
-      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' && 
+      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' &&
           (xbuf[i-3]=='.' || xbuf[i-3]=='?' || xbuf[i-3]=='!')) {
         xbuf[i-2]=*rdesc;
         if (*(rdesc+1) != '\"')
@@ -331,11 +329,11 @@ char *format_string( char *oldstring /*, bool fSpace */)
   }
   xbuf[i]=0;
   strcpy(xbuf2,xbuf);
-  
+
   rdesc=xbuf2;
-  
+
   xbuf[0]=0;
-  
+
   for ( ; ; )
   {
     for (i=0; i<77; i++)

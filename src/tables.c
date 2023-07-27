@@ -14,7 +14,7 @@
  *  benefitting.  We hope that you share your changes too.  What goes      *
  *  around, comes around.                                                  *
  ***************************************************************************/
- 
+
 /***************************************************************************
 *	ROM 2.4 is copyright 1993-1998 Russ Taylor			   *
 *	ROM has been brought to you by the ROM consortium		   *
@@ -25,13 +25,11 @@
 *	ROM license, in the file Rom24/doc/rom.license			   *
 ***************************************************************************/
 
-#if defined(macintosh)
-#include <types.h>
-#else
 #include <sys/types.h>
-#endif
+#include <stdbool.h>
 #include <stdio.h>
 #include <time.h>
+
 #include "merc.h"
 #include "tables.h"
 
@@ -72,7 +70,7 @@ const struct sex_type sex_table[] =
 
 /* for sizes */
 const struct size_type size_table[] =
-{ 
+{
     {	"tiny"		},
     {	"small" 	},
     {	"medium"	},

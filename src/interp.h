@@ -1,3 +1,6 @@
+#ifndef _ROM_INTERP_H_
+#define _ROM_INTERP_H_
+
 /***************************************************************************
  *  Original Diku Mud copyright (C) 1990, 1991 by Sebastian Hammer,	   *
  *  Michael Seifert, Hans Henrik St{rfeldt, Tom Madsen, and Katja Nyboe.   *
@@ -14,7 +17,7 @@
  *  benefitting.  We hope that you share your changes too.  What goes	   *
  *  around, comes around.						   *
  ***************************************************************************/
- 
+
 /***************************************************************************
 *	ROM 2.4 is copyright 1993-1998 Russ Taylor			   *
 *	ROM has been brought to you by the ROM consortium		   *
@@ -25,10 +28,12 @@
 *	ROM license, in the file Rom24/doc/rom.license			   *
 ***************************************************************************/
 
+#include "merc.h"
+
 /* this is a listing of all the commands and command related data */
 
 /* wrapper function for safe command execution */
-void do_function args((CHAR_DATA *ch, DO_FUN *do_fun, char *argument));
+void do_function (CHAR_DATA *ch, DO_FUN *do_fun, char *argument);
 
 /* for command types */
 #define ML 	MAX_LEVEL	/* implementor */
@@ -296,3 +301,5 @@ DECLARE_DO_FUN( do_worth	);
 DECLARE_DO_FUN(	do_yell		);
 DECLARE_DO_FUN(	do_zap		);
 DECLARE_DO_FUN( do_zecho	);
+
+#endif /* _ROM_INTERP_H_ */

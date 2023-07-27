@@ -18,10 +18,10 @@ rom: $(O_FILES)
 	rm -f rom
 	$(CC) $(L_FLAGS) -o rom $(O_FILES)
 
-.c.o: merc.h
+%.o: %.c %.h merc.h
 	$(CC) -c $(C_FLAGS) $<
 
 cleaner:
-	rm *.o
+	rm rom *.o
 
-clean:	cleaner rom
+clean:	cleaner

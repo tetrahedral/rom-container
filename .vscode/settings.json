@@ -1,0 +1,26 @@
+{
+    "[c]": {
+        "editor.detectIndentation": true,
+        "editor.indentSize": 4,
+        "editor.tabSize": 8,
+        "editor.renderWhitespace": "boundary"
+    },
+    "files.associations": {
+        "*.toml": "toml",
+        "*.clang-format": "yaml",
+        "Makefile.*": "makefile",
+        "interp.h": "c",
+        "time.h": "c",
+        "malloc.h": "c",
+        "merc.h": "c",
+        "unistd.h": "c",
+        "ctype.h": "c",
+        "stdlib.h": "c",
+        "random.h": "c",
+        "stdbool.h": "c"
+    },
+    "C_Cpp.default.defines": [
+        "unix",
+        "linux"
+    ]
+}

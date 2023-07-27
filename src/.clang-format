@@ -1,0 +1,48 @@
+---
+BasedOnStyle: LLVM
+IndentWidth: 4
+ColumnLimit: 100
+---
+Language: Cpp
+AlignArrayOfStructures: Right
+AlignConsecutiveAssignments:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: false
+  PadOperators: true
+AlignConsecutiveDeclarations:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: false
+  PadOperators: true
+AlignConsecutiveMacros:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: false
+  PadOperators: true
+AlignEscapedNewlines: Left
+AlignOperands: AlignAfterOperator
+AllowShortFunctionsOnASingleLine: Empty
+BreakBeforeBraces: Linux
+BreakBeforeBinaryOperators: NonAssignment
+BreakStringLiterals: false
+DerivePointerAlignment: true
+ExperimentalAutoDetectBinPacking: true
+IndentGotoLabels: false
+MaxEmptyLinesToKeep: 2
+SortIncludes: Never
+SpacesInContainerLiterals: false
+---
+Language: JavaScript
+JavaScriptQuotes: Single
+JavaScriptWrapImports: true
+SpacesInContainerLiterals: false
+---
+Language: Json
+---
+Language: Proto
+DisableFormat: true
+...

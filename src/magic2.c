@@ -25,15 +25,13 @@
 *	ROM license, in the file Rom24/doc/rom.license			   *
 ***************************************************************************/
 
-#if defined(macintosh)
-#include <types.h>
-#else
 #include <sys/types.h>
-#endif
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
 #include "merc.h"
 #include "interp.h"
 #include "magic.h"
@@ -48,7 +46,7 @@ void spell_farsight( int sn, int level, CHAR_DATA *ch, void *vo,int target)
         send_to_char("Maybe it would help if you could see?\n\r",ch);
         return;
     }
- 
+
     do_function(ch, &do_scan, target_name);
 }
 
@@ -70,15 +68,15 @@ void spell_portal( int sn, int level, CHAR_DATA *ch, void *vo,int target)
     ||   victim->level >= level + 3
     ||   (!IS_NPC(victim) && victim->level >= LEVEL_HERO)  /* NOT trust */
     ||   (IS_NPC(victim) && IS_SET(victim->imm_flags,IMM_SUMMON))
-    ||   (IS_NPC(victim) && saves_spell( level, victim,DAM_NONE) ) 
+    ||   (IS_NPC(victim) && saves_spell( level, victim,DAM_NONE) )
     ||	(is_clan(victim) && !is_same_clan(ch,victim)))
     {
         send_to_char( "You failed.\n\r", ch );
         return;
-    }   
+    }
 
     stone = get_eq_char(ch,WEAR_HOLD);
-    if (!IS_IMMORTAL(ch) 
+    if (!IS_IMMORTAL(ch)
     &&  (stone == NULL || stone->item_type != ITEM_WARP_STONE))
     {
 	send_to_char("You lack the proper component for this spell.\n\r",ch);
@@ -93,7 +91,7 @@ void spell_portal( int sn, int level, CHAR_DATA *ch, void *vo,int target)
     }
 
     portal = create_object(get_obj_index(OBJ_VNUM_PORTAL),0);
-    portal->timer = 2 + level / 25; 
+    portal->timer = 2 + level / 25;
     portal->value[3] = victim->in_room->vnum;
 
     obj_to_room(portal,ch->in_room);
@@ -109,7 +107,7 @@ void spell_nexus( int sn, int level, CHAR_DATA *ch, void *vo, int target)
     ROOM_INDEX_DATA *to_room, *from_room;
 
     from_room = ch->in_room;
- 
+
         if ( ( victim = get_char_world( ch, target_name ) ) == NULL
     ||   victim == ch
     ||   (to_room = victim->in_room) == NULL
@@ -123,13 +121,13 @@ void spell_nexus( int sn, int level, CHAR_DATA *ch, void *vo, int target)
     ||   victim->level >= level + 3
     ||   (!IS_NPC(victim) && victim->level >= LEVEL_HERO)  /* NOT trust */
     ||   (IS_NPC(victim) && IS_SET(victim->imm_flags,IMM_SUMMON))
-    ||   (IS_NPC(victim) && saves_spell( level, victim,DAM_NONE) ) 
+    ||   (IS_NPC(victim) && saves_spell( level, victim,DAM_NONE) )
     ||	 (is_clan(victim) && !is_same_clan(ch,victim)))
     {
         send_to_char( "You failed.\n\r", ch );
         return;
-    }   
- 
+    }
+
     stone = get_eq_char(ch,WEAR_HOLD);
     if (!IS_IMMORTAL(ch)
     &&  (stone == NULL || stone->item_type != ITEM_WARP_STONE))
@@ -137,7 +135,7 @@ void spell_nexus( int sn, int level, CHAR_DATA *ch, void *vo, int target)
         send_to_char("You lack the proper component for this spell.\n\r",ch);
         return;
     }
- 
+
     if (stone != NULL && stone->item_type == ITEM_WARP_STONE)
     {
         act("You draw upon the power of $p.",ch,stone,NULL,TO_CHAR);
@@ -145,13 +143,13 @@ void spell_nexus( int sn, int level, CHAR_DATA *ch, void *vo, int target)
         extract_obj(stone);
     }
 
-    /* portal one */ 
+    /* portal one */
     portal = create_object(get_obj_index(OBJ_VNUM_PORTAL),0);
     portal->timer = 1 + level / 10;
     portal->value[3] = to_room->vnum;
- 
+
     obj_to_room(portal,from_room);
- 
+
     act("$p rises up from the ground.",ch,portal,NULL,TO_ROOM);
     act("$p rises up before you.",ch,portal,NULL,TO_CHAR);
 

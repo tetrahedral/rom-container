@@ -25,21 +25,19 @@
 *	ROM license, in the file Rom24/doc/rom.license			   *
 ***************************************************************************/
 
-#if defined(macintosh)
-#include <types.h>
-#else
 #include <sys/types.h>
 #include <sys/time.h>
-#endif
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+
 #include "merc.h"
 #include "music.h"
 #include "recycle.h"
 
-int channel_songs[MAX_GLOBAL + 1];
+int channel_songs[MAX_GLOBAL_SONGS + 1];
 struct song_data song_table[MAX_SONGS];
 
 void song_update(void)
@@ -58,15 +56,15 @@ void song_update(void)
 
     if (channel_songs[1] > -1)
     {
-        if (channel_songs[0] >= MAX_LINES
+        if (channel_songs[0] >= MAX_SONG_LINES
         ||  channel_songs[0] >= song_table[channel_songs[1]].lines)
         {
 	    channel_songs[0] = -1;
 
             /* advance songs */
-	    for (i = 1; i < MAX_GLOBAL; i++)
+	    for (i = 1; i < MAX_GLOBAL_SONGS; i++)
 	    	channel_songs[i] = channel_songs[i+1];
-	    channel_songs[MAX_GLOBAL] = -1;
+	    channel_songs[MAX_GLOBAL_SONGS] = -1;
 	}
 	else
 	{
@@ -129,7 +127,7 @@ void song_update(void)
 	}
 	else
 	{
-	    if (obj->value[0] >= MAX_LINES 
+	    if (obj->value[0] >= MAX_SONG_LINES
 	    || obj->value[0] >= song_table[obj->value[1]].lines)
 	    {
 
@@ -153,7 +151,7 @@ void song_update(void)
     }
 }
 
-	    
+
 
 void load_songs(void)
 {
@@ -162,7 +160,7 @@ void load_songs(void)
     char letter;
 
     /* reset global */
-    for (i = 0; i <= MAX_GLOBAL; i++)
+    for (i = 0; i <= MAX_GLOBAL_SONGS; i++)
 	channel_songs[i] = -1;
 
     if ((fp = fopen(MUSIC_FILE,"r")) == NULL)
@@ -202,10 +200,10 @@ void load_songs(void)
 	    }
 	    else
 		ungetc(letter,fp);
-		
-	    if (lines >= MAX_LINES)
+
+	    if (lines >= MAX_SONG_LINES)
    	    {
-		bug("Too many lines in a song -- limit is  %d.",MAX_LINES);
+		bug("Too many lines in a song -- limit is  %d.",MAX_SONG_LINES);
 		break;
 	    }
 
@@ -266,11 +264,11 @@ void do_play(CHAR_DATA *ch, char *argument)
 	    if (song_table[i].name == NULL)
 		break;
 
-	    if (artist && (!match 
+	    if (artist && (!match
 	    || 		   !str_prefix(argument,song_table[i].group)))
 		sprintf(buf,"%-39s %-39s\n\r",
 		    song_table[i].group,song_table[i].name);
-	    else if (!artist && (!match 
+	    else if (!artist && (!match
 	    || 	 		 !str_prefix(argument,song_table[i].name)))
 	    	sprintf(buf,"%-35s ",song_table[i].name);
 	    else
@@ -299,7 +297,7 @@ void do_play(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ((global && channel_songs[MAX_GLOBAL] > -1) 
+    if ((global && channel_songs[MAX_GLOBAL_SONGS] > -1)
     ||  (!global && juke->value[4] > -1))
     {
         send_to_char("The jukebox is full up right now.\n\r",ch);
@@ -327,7 +325,7 @@ void do_play(CHAR_DATA *ch, char *argument)
 
     if (global)
     {
-	for (i = 1; i <= MAX_GLOBAL; i++)
+	for (i = 1; i <= MAX_GLOBAL_SONGS; i++)
 	    if (channel_songs[i] < 0)
 	    {
 		if (i == 1)
@@ -336,7 +334,7 @@ void do_play(CHAR_DATA *ch, char *argument)
 		return;
 	    }
     }
-    else 
+    else
     {
 	for (i = 1; i < 5; i++)
 	    if (juke->value[i] < 0)

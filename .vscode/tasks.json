@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "compile .c file",
+            "command": "gcc",
+            "args": ["-c", "-Wall", "-O", "-g", "${file}"],
+            "group": {
+                "kind": "build"
+            }
+        },
+        {
+            "label": "make",
+            "command": "make",
+            "args": ["-f", "Makefile.linux", "clean", "rom"],
+            "options": {
+                "cwd": "${workspaceFolder}/src/"
+            },
+            "problemMatcher": {
+                "base": "$gcc",
+                "fileLocation": [
+                    "autoDetect",
+                    "${workspaceFolder}/src/"
+                ]
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "make clean",
+            "command": "make",
+            "args": ["-f", "Makefile.linux", "clean"],
+            "options": {
+                "cwd": "${workspaceFolder}/src"
+            }
+        }
+    ]
+}
