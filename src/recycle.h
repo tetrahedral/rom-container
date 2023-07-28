@@ -1,6 +1,10 @@
 #ifndef _ROM_RECYCLE_H_
 #define _ROM_RECYCLE_H_
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 /***************************************************************************
  *  Original Diku Mud copyright (C) 1990, 1991 by Sebastian Hammer,	   *
  *  Michael Seifert, Hans Henrik St{rfeldt, Tom Madsen, and Katja Nyboe.   *
@@ -115,5 +119,9 @@ void    free_buf(BUFFER *buffer);
 bool    add_buf(BUFFER *buffer, char *string);
 void    clear_buf(BUFFER *buffer);
 char   *buf_string(BUFFER *buffer);
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif /* _ROM_RECYCLE_H_ */

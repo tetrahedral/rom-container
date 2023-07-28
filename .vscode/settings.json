@@ -2,7 +2,7 @@
     "[c]": {
         "editor.detectIndentation": true,
         "editor.indentSize": 4,
-        "editor.tabSize": 8,
+        "editor.tabSize": 4,
         "editor.renderWhitespace": "boundary"
     },
     "files.associations": {
@@ -17,10 +17,9 @@
         "ctype.h": "c",
         "stdlib.h": "c",
         "random.h": "c",
-        "stdbool.h": "c"
-    },
-    "C_Cpp.default.defines": [
-        "unix",
-        "linux"
-    ]
+        "stdbool.h": "c",
+        "lua.h": "c",
+        "lauxlib.h": "c",
+        "lualib.h": "c"
+    }
 }

@@ -1,6 +1,10 @@
 #ifndef _ROM_OLC_H_
 #define _ROM_OLC_H_
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 /***************************************************************************
  *  File: olc.h                                                            *
  *                                                                         *
@@ -279,5 +283,9 @@ void             free_obj_index(OBJ_INDEX_DATA *pObj);
 MOB_INDEX_DATA  *new_mob_index(void);
 void             free_mob_index(MOB_INDEX_DATA *pMob);
 #undef ED
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif /* _ROM_OLC_H_ */

@@ -92,11 +92,6 @@ const char go_ahead_str[] = {(char)IAC, (char)GA, '\0'};
  * OS-dependent declarations.
  */
 
-#if defined(interactive)
-#include <net/errno.h>
-#include <sys/fnctl.h>
-#endif
-
 #if defined(linux)
 /*
     Linux shouldn't need these. If you have a problem compiling, try
@@ -135,24 +130,23 @@ time_t           current_time; /* time of this pulse */
 /*
  * OS-dependent local functions.
  */
-void game_loop_unix(int control);
-int  init_socket(int port);
-void init_descriptor(int control);
-bool read_from_descriptor(DESCRIPTOR_DATA *d);
-bool write_to_descriptor(int desc, char *txt, int length);
+static void game_loop_unix(int control);
+static int  init_socket(int port);
+static void init_descriptor(int control);
+static bool read_from_descriptor(DESCRIPTOR_DATA *d);
+static bool write_to_descriptor(int desc, char *txt, int length);
 
 /*
  * Other local functions (OS-independent).
  */
-bool check_parse_name(char *name);
-bool check_reconnect(DESCRIPTOR_DATA *d, char *name, bool fConn);
-bool check_playing(DESCRIPTOR_DATA *d, char *name);
-int  main(int argc, char **argv);
-void nanny(DESCRIPTOR_DATA *d, char *argument);
-bool process_output(DESCRIPTOR_DATA *d, bool fPrompt);
-void read_from_buffer(DESCRIPTOR_DATA *d);
-void stop_idling(CHAR_DATA *ch);
-void bust_a_prompt(CHAR_DATA *ch);
+static bool check_parse_name(char *name);
+static bool check_reconnect(DESCRIPTOR_DATA *d, char *name, bool fConn);
+static bool check_playing(DESCRIPTOR_DATA *d, char *name);
+static void nanny(DESCRIPTOR_DATA *d, char *argument);
+static bool process_output(DESCRIPTOR_DATA *d, bool fPrompt);
+static void read_from_buffer(DESCRIPTOR_DATA *d);
+static void stop_idling(CHAR_DATA *ch);
+static void bust_a_prompt(CHAR_DATA *ch);
 
 int main(int argc, char **argv)
 {

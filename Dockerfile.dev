@@ -1,11 +1,13 @@
 FROM alpine:3.18 as builder
 
-RUN apk add --no-cache build-base curl git python3
+RUN apk add --no-cache build-base gdb curl git python3
 
 RUN python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
     pip3 install --upgrade pip setuptools
 
+# This is only for style checking and auto-formatting. It is not required to build the ROM.
+# the ROM probably doesn't even compile under clang.
 RUN pip3 install clang-format
 
 WORKDIR /rom

@@ -4,7 +4,9 @@
         {
             "label": "compile .c file",
             "command": "gcc",
-            "args": ["-c", "-Wall", "-O", "-g", "${file}"],
+            "args": [
+                "-std=gnu99", "-Wall", "-Wextra", "-O", "-g", "-c", "${file}"
+            ],
             "group": {
                 "kind": "build"
             }
@@ -12,9 +14,9 @@
         {
             "label": "make",
             "command": "make",
-            "args": ["-f", "Makefile.linux", "clean", "rom"],
+            "args": ["clean", "rom"],
             "options": {
-                "cwd": "${workspaceFolder}/src/"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": {
                 "base": "$gcc",
@@ -31,9 +33,9 @@
         {
             "label": "make clean",
             "command": "make",
-            "args": ["-f", "Makefile.linux", "clean"],
+            "args": ["clean"],
             "options": {
-                "cwd": "${workspaceFolder}/src"
+                "cwd": "${workspaceFolder}"
             }
         }
     ]

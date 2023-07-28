@@ -1,6 +1,10 @@
 #ifndef _ROM_TABLES_H_
 #define _ROM_TABLES_H_
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 /***************************************************************************
  *  Original Diku Mud copyright (C) 1990, 1991 by Sebastian Hammer,	   *
  *  Michael Seifert, Hans Henrik St{rfeldt, Tom Madsen, and Katja Nyboe.   *
@@ -72,5 +76,9 @@ extern const struct flag_type container_flags[];
 extern const struct flag_type portal_flags[];
 extern const struct flag_type room_flags[];
 extern const struct flag_type exit_flags[];
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif /* _ROM_TABLES_H_ */

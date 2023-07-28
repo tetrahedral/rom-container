@@ -1,2 +1,8 @@
 *.o
 rom
+*.VC.DB*
+lib*.a
+lib/
+lua
+luac
+*.tar.gz

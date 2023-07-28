@@ -1,13 +1,11 @@
+# docker-compose run -it --rm builder
 version: "3"
 services:
   builder:
-    image: rom-build-dev
     build:
       context: .
       dockerfile: Dockerfile.dev
     command: /bin/sh
-    tty: true
-    stdin_open: true
     volumes:
       - type: bind
         source: .

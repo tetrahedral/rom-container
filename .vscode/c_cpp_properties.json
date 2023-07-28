@@ -3,27 +3,35 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/lua-5.4.6/src"
             ],
             "defines": [
-                "unix",
-                "linux"
             ],
             "compilerArgs": [
+                "-std=gnu99",
                 "-Wall",
                 "-Wextra",
-                "-std=c99",
                 "-pedantic",
                 "-Wstrict-prototypes",
+                "-Wmissing-prototypes",
+                "-Wno-unused-parameter",
+                "-Wno-unused-function",
                 "-O",
-                "-g"
+                "-g",
+                "-c"
             ],
             "compilerPath": "/usr/bin/gcc",
-            "cStandard": "c99",
+            "cStandard": "gnu99",
             "cppStandard": "gnu++17",
             "intelliSenseMode": "linux-gcc-x64",
             "browse": {
-                "limitSymbolsToIncludedHeaders": true
+                "path": [
+                    "${workspaceFolder}/src",
+                    "${workspaceFolder}/lua-5.4.6/src"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": "${workspaceFolder}/.vscode/browse.vc.db"
             }
         }
     ],
