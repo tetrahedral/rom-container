@@ -30,8 +30,7 @@
                     "${workspaceFolder}/src",
                     "${workspaceFolder}/lua-5.4.6/src"
                 ],
-                "limitSymbolsToIncludedHeaders": true,
-                "databaseFilename": "${workspaceFolder}/.vscode/browse.vc.db"
+                "limitSymbolsToIncludedHeaders": true
             }
         }
     ],
