@@ -1,15 +1,23 @@
 FROM alpine:3.18 as builder
 RUN apk add --no-cache build-base curl
+
+COPY ./src /rom/src
+COPY ./Makefile /rom/Makefile
 WORKDIR /rom
-COPY ./src src
-COPY ./Makefile Makefile
 RUN make
 
 FROM alpine:3.18 as runner
-WORKDIR /rom
-COPY --from=builder /rom/rom rom
-# MOUNT ./area area
-# MOUNT ./gods gods
-# MOUNT ./player player
-# MOUNT ./scripts scripts
-ENTRYPOINT [ "rom" ]
+
+RUN mkdir -p /rom/src && \
+    mkdir -p /rom/area && \
+    mkdir -p /rom/log && \
+    mkdir -p /rom/player
+
+COPY --from=builder /rom/src/rom /rom/src/rom
+COPY ./area /rom/area
+COPY ./scripts /rom/scripts
+
+WORKDIR /rom/area
+VOLUME /rom
+ARG PORT=9000
+ENTRYPOINT [ "startup", "${PORT}" ]

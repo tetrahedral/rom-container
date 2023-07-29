@@ -1,6 +1,6 @@
 FROM alpine:3.18 as builder
 
-RUN apk add --no-cache build-base gdb curl python3
+RUN apk add --no-cache build-base gdb curl python3 clang clang-extra-tools git
 
 RUN python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \

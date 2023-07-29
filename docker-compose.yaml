@@ -1,12 +1,12 @@
-# docker-compose run -it --rm builder
+# docker-compose run -it --rm development
 version: "3"
 services:
-  builder:
+  development:
     build:
       context: .
       dockerfile: Dockerfile.dev
     command: /bin/sh
     volumes:
-      - type: bind
-        source: .
-        target: /rom
+      - .:/workspace:cached
+    ports:
+      - 9000:9000

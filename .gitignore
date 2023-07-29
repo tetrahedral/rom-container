@@ -6,3 +6,5 @@ lib/
 lua
 luac
 *.tar.gz
+src/db
+area/shutdown.txt
