@@ -3,8 +3,10 @@ rom
 *.VC.DB*
 lib*.a
 lib/
+build/
 lua
 luac
 *.tar.gz
 src/db
 area/shutdown.txt
+.cache/

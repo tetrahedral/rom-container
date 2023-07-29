@@ -1,0 +1,236 @@
+[
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o act_comm.o -c /workspace/src/act_comm.c",
+    "file": "/workspace/src/act_comm.c",
+    "output": "act_comm.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o act_enter.o -c /workspace/src/act_enter.c",
+    "file": "/workspace/src/act_enter.c",
+    "output": "act_enter.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o act_info.o -c /workspace/src/act_info.c",
+    "file": "/workspace/src/act_info.c",
+    "output": "act_info.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o act_move.o -c /workspace/src/act_move.c",
+    "file": "/workspace/src/act_move.c",
+    "output": "act_move.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o act_obj.o -c /workspace/src/act_obj.c",
+    "file": "/workspace/src/act_obj.c",
+    "output": "act_obj.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o act_wiz.o -c /workspace/src/act_wiz.c",
+    "file": "/workspace/src/act_wiz.c",
+    "output": "act_wiz.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o alias.o -c /workspace/src/alias.c",
+    "file": "/workspace/src/alias.c",
+    "output": "alias.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o ban.o -c /workspace/src/ban.c",
+    "file": "/workspace/src/ban.c",
+    "output": "ban.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o bit.o -c /workspace/src/bit.c",
+    "file": "/workspace/src/bit.c",
+    "output": "bit.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o comm.o -c /workspace/src/comm.c",
+    "file": "/workspace/src/comm.c",
+    "output": "comm.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o const.o -c /workspace/src/const.c",
+    "file": "/workspace/src/const.c",
+    "output": "const.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o db.o -c /workspace/src/db.c",
+    "file": "/workspace/src/db.c",
+    "output": "db.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o db2.o -c /workspace/src/db2.c",
+    "file": "/workspace/src/db2.c",
+    "output": "db2.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o effects.o -c /workspace/src/effects.c",
+    "file": "/workspace/src/effects.c",
+    "output": "effects.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o fight.o -c /workspace/src/fight.c",
+    "file": "/workspace/src/fight.c",
+    "output": "fight.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o flags.o -c /workspace/src/flags.c",
+    "file": "/workspace/src/flags.c",
+    "output": "flags.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o handler.o -c /workspace/src/handler.c",
+    "file": "/workspace/src/handler.c",
+    "output": "handler.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o healer.o -c /workspace/src/healer.c",
+    "file": "/workspace/src/healer.c",
+    "output": "healer.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o interp.o -c /workspace/src/interp.c",
+    "file": "/workspace/src/interp.c",
+    "output": "interp.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o lookup.o -c /workspace/src/lookup.c",
+    "file": "/workspace/src/lookup.c",
+    "output": "lookup.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o magic.o -c /workspace/src/magic.c",
+    "file": "/workspace/src/magic.c",
+    "output": "magic.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o magic2.o -c /workspace/src/magic2.c",
+    "file": "/workspace/src/magic2.c",
+    "output": "magic2.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o mem.o -c /workspace/src/mem.c",
+    "file": "/workspace/src/mem.c",
+    "output": "mem.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o merc.o -c /workspace/src/merc.h",
+    "file": "/workspace/src/merc.h",
+    "output": "merc.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o music.o -c /workspace/src/music.c",
+    "file": "/workspace/src/music.c",
+    "output": "music.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o note.o -c /workspace/src/note.c",
+    "file": "/workspace/src/note.c",
+    "output": "note.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o olc.c.o -c /workspace/s.olc.c",
+    "file": "/workspace/src/olc.c",
+    "output": "olc.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o olc_act.c.o -c /workspace/s.olc_act.c",
+    "file": "/workspace/src/olc_act.c",
+    "output": "olc_act.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o olc_save.c.o -c /workspace/s.olc_save.c",
+    "file": "/workspace/src/olc_save.c",
+    "output": "olc_save.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o recycle.o -c /workspace/src/recycle.c",
+    "file": "/workspace/src/recycle.c",
+    "output": "recycle.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o save.o -c /workspace/src/save.c",
+    "file": "/workspace/src/save.c",
+    "output": "save.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o scan.o -c /workspace/src/scan.c",
+    "file": "/workspace/src/scan.c",
+    "output": "scan.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o script_api.o -c /workspace/src/script_api.c",
+    "file": "/workspace/src/script_api.c",
+    "output": "script_api.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o scripting.o -c /workspace/src/scripting.c",
+    "file": "/workspace/src/scripting.c",
+    "output": "scripting.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o skills.o -c /workspace/src/skills.c",
+    "file": "/workspace/src/skills.c",
+    "output": "skills.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o special.o -c /workspace/src/special.c",
+    "file": "/workspace/src/special.c",
+    "output": "special.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o string.o -c /workspace/src/string.c",
+    "file": "/workspace/src/string.c",
+    "output": "string.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o tables.o -c /workspace/src/tables.c",
+    "file": "/workspace/src/tables.c",
+    "output": "tables.o"
+  },
+  {
+    "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o update.o -c /workspace/src/update.c",
+    "file": "/workspace/src/update.c",
+    "output": "update.o"
+  }
+  ]
