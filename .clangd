@@ -1,0 +1,16 @@
+Index:
+    StandardLibrary: Yes
+
+Diagnostics:
+    Suppress: []
+    ClangTidy:
+        Add: [ 'modernize*', 'bugprone-*', 'clang-analyzer-*' ]
+
+InlayHints:
+    Enabled: Yes
+    Designators: Yes
+    ParameterNames: Yes
+    DeducedTypes: Yes
+
+Hover:
+    ShowAKA: Yes
