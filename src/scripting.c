@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 #include <dirent.h>
 
 #include <lua.h>
@@ -10,29 +11,30 @@
 #include <lauxlib.h>
 
 #include "scripting.h"
+#include "script_api.h"
 #include "merc.h"
 
 #define MAX_SCRIPTS 256
 #define ERR_BUF_SZ  1024
 
-#define SCRIPTS_DIR "scripts"
 #define SCRIPT_EXT  ".lua"
+#define SCRIPTS_DIR "../scripts/"
 #define ERR_LOG_PFX "[*****] BUG: "
 
 struct script_data {
-    char *filename;
+    char      *filename;
     lua_State *lState;
 };
 
 typedef struct script_data SCRIPT_DATA;
 
-static SCRIPT_DATA scripts[MAX_SCRIPTS] = { 0 };
+static SCRIPT_DATA scripts[MAX_SCRIPTS] = {0};
 
 static bool initialized = false;
 
 static size_t loaded_scripts = 0;
 
-static char error_buf[ERR_BUF_SZ] = { '\0' };
+static char error_buf[ERR_BUF_SZ] = {'\0'};
 
 static const luaL_Reg lualibs[] = {
     {         "base",   luaopen_base},
@@ -43,17 +45,29 @@ static const luaL_Reg lualibs[] = {
     {           NULL,           NULL}
 };
 
-static void log_err(const char *str, ...)
+static void log_errf(const char *str, ...)
 {
     va_list v_args;
 
     strcpy(error_buf, ERR_LOG_PFX);
 
     va_start(v_args, str);
-    vsnprintf(error_buf + strlen(error_buf), ERR_BUF_SZ, str, v_args);
+    vsnprintf(error_buf + strlen(error_buf), sizeof(error_buf), str, v_args);
     va_end(v_args);
 
     log_string(error_buf);
+}
+
+static void log_strf(const char *str, ...)
+{
+    va_list v_args;
+    char    buf[MAX_STRING_LENGTH];
+
+    va_start(v_args, str);
+    vsnprintf(buf, sizeof(buf), str, v_args);
+    va_end(v_args);
+
+    log_string(buf);
 }
 
 static void openlibs(lua_State *l)
@@ -65,29 +79,41 @@ static void openlibs(lua_State *l)
     }
 }
 
-static void load_script(char *filename)
+static int register_script_api(lua_State *lState)
 {
-    size_t sIdx = loaded_scripts;
+    SCRIPT_API_ENTRY *api_entry;
+
+    for (api_entry = script_api_list; api_entry->name != NULL; api_entry++)
+        lua_register(lState, api_entry->name, api_entry->func);
+
+    return S_OK;
+}
+
+static int load_script(char *filename)
+{
+    size_t     sIdx = loaded_scripts;
     lua_State *lState;
 
     if (loaded_scripts >= MAX_SCRIPTS) {
-        log_err("load_script: unable to load all scripts; MAX_SCRIPTS reached");
-        return;
+        log_errf("load_script: unable to load all scripts; MAX_SCRIPTS reached");
+        return S_MAX_SCRIPTS;
     }
 
     lState = luaL_newstate();
+    openlibs(lState);
 
     scripts[sIdx].filename = filename;
-    scripts[sIdx].lState = lState;
+    scripts[sIdx].lState   = lState;
 
     if (luaL_dofile(lState, filename) != LUA_OK) {
-        log_err("error loading script [%s]: %s", filename, luaL_checkstring(lState, 1));
+        log_errf("error loading script [%s]: %s", filename, luaL_checkstring(lState, 1));
         lua_pop(lState, 1);
         lua_close(lState);
-        return;
+        return S_LOAD_ERR;
     }
 
     loaded_scripts++;
+    return S_OK;
 }
 
 /*
@@ -96,15 +122,20 @@ static void load_script(char *filename)
  */
 static int scan_scripts(void)
 {
-    DIR *dir;
+    DIR           *dir;
     struct dirent *ent;
-    char script_path[512];
-    size_t fname_len;
+    char           script_path[512];
+    size_t         fname_len;
+
+    log_strf("scan_scripts: beginning scan of " SCRIPTS_DIR);
 
     if ((dir = opendir(SCRIPTS_DIR)) == NULL) {
-        log_err("scan_scripts: unable to open script directory: " SCRIPTS_DIR);
-        return 2;
+        log_errf("scan_scripts: unable to open script directory '" SCRIPTS_DIR "': %s",
+                 strerror(errno));
+        return S_DIR_ERR;
     }
+
+    int rc;
 
     while ((ent = readdir(dir)) != NULL) {
         if (ent->d_type != DT_REG)
@@ -118,24 +149,28 @@ static int scan_scripts(void)
         if (strcmp(ent->d_name + fname_len - 4, SCRIPT_EXT) != 0)
             continue;
 
-        snprintf(script_path, sizeof(script_path), SCRIPTS_DIR "/%s", ent->d_name);
+        snprintf(script_path, sizeof(script_path), SCRIPTS_DIR "%s", ent->d_name);
 
-        load_script(script_path);
+        if ((rc = load_script(script_path)) != S_OK)
+            break;
     }
 
     closedir(dir);
-    return 0;
+
+    return rc;
 }
 
 /* Initialize the scripting runtime, loading all scripts under SCRIPT_DIR. */
 int script_rt_init()
 {
-    int rc = 0;
+    int rc = S_OK;
 
     if (initialized)
-        return 0;
+        return S_OK;
 
-    if ((rc = scan_scripts()) == 0)
+    log_strf("initializing script runtime");
+
+    if ((rc = scan_scripts()) == S_OK)
         initialized = true;
 
     return rc;
@@ -144,6 +179,8 @@ int script_rt_init()
 /* Shut down the scripting runtime, safely closing all loaded scripts. */
 void script_rt_close()
 {
+    log_strf("closing script runtime");
+
     for (size_t i = 0; i < loaded_scripts; i++) {
         if (scripts[i].lState == NULL)
             continue;

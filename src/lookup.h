@@ -1,6 +1,10 @@
 #ifndef _ROM_LOOKUP_H_
 #define _ROM_LOOKUP_H_
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 /***************************************************************************
  *  Original Diku Mud copyright (C) 1990, 1991 by Sebastian Hammer,	   *
  *  Michael Seifert, Hans Henrik St{rfeldt, Tom Madsen, and Katja Nyboe.   *
@@ -35,5 +39,9 @@ int clan_lookup(const char *name);
 int position_lookup(const char *name);
 int sex_lookup(const char *name);
 int size_lookup(const char *name);
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif /* _ROM_LOOKUP_H_ */

@@ -25,6 +25,7 @@
  *	ROM license, in the file Rom24/doc/rom.license			   *
  ***************************************************************************/
 
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -491,10 +492,11 @@ void new_load_area(FILE *fp)
         }
 
         if (!fMatch) {
-            char buf[128];
-            snprintf(buf, sizeof(buf), "new_load_area: unsupported key: %s",
-                     word);
-            log_string(buf);
+            continue;
+            // char buf[128];
+            // snprintf(buf, sizeof(buf), "new_load_area: unsupported key: %s",
+            //          word);
+            // log_string(buf);
         }
     }
 }
@@ -2128,10 +2130,10 @@ char *fread_word(FILE *fp)
  */
 void *alloc_mem(int sMem)
 {
-    int  *pMem;
-    int   iList;
+    int  iList;
+    int *pMem;
 
-    sMem += sizeof(*pMem);
+    sMem += sizeof(int);
 
     for (iList = 0; iList < MAX_MEM_LIST; iList++) {
         if (sMem <= rgSizeList[iList])
@@ -2150,8 +2152,7 @@ void *alloc_mem(int sMem)
         rgFreeList[iList] = *((void **)rgFreeList[iList]);
     }
 
-    *pMem = MAGIC_NUM;
-    pMem += sizeof(*pMem);
+    *(pMem++) = MAGIC_NUM;
 
     return (void *)pMem;
 }
@@ -2164,22 +2165,18 @@ void *alloc_mem(int sMem)
 void free_mem(void *pMem, int sMem)
 {
     int  iList;
-    int *magic;
-    int *mem_ptr;
+    int *mem_ptr = (int *)pMem;
 
-    mem_ptr = (int *)pMem;
-    mem_ptr -= sizeof(*magic);
+    mem_ptr--;
 
-    magic = mem_ptr;
-
-    if (*magic != MAGIC_NUM) {
+    if (*mem_ptr != MAGIC_NUM) {
         bug("Attempt to recyle invalid memory of size %d.", sMem);
-        bug((char *)mem_ptr + sizeof(*magic), 0);
+        bug((char *)(mem_ptr + 1), 0);
         return;
     }
 
-    *magic = 0;
-    sMem += sizeof(*magic);
+    *mem_ptr = 0;
+    sMem += sizeof(int);
 
     for (iList = 0; iList < MAX_MEM_LIST; iList++) {
         if (sMem <= rgSizeList[iList])
@@ -2866,6 +2863,20 @@ void bug(const char *str, int param)
     return;
 }
 
+/*
+ * Reports a bug with formatting.
+ */
+void bugf(const char *str, ...)
+{
+    va_list v_args;
+    char    buf[MAX_STRING_LENGTH];
+
+    va_start(v_args, str);
+    vsnprintf(buf, sizeof(buf), str, v_args);
+    va_end(v_args);
+
+    bug(buf, 0);
+}
 
 /*
  * Writes a string to the log.
@@ -2878,6 +2889,21 @@ void log_string(const char *str)
     strtime[strlen(strtime) - 1] = '\0';
     fprintf(stderr, "%s :: %s\n", strtime, str);
     return;
+}
+
+/*
+ * Writes a formatted string to the log.
+ */
+void log_stringf(const char *str, ...)
+{
+    va_list v_args;
+    char    buf[MAX_STRING_LENGTH];
+
+    va_start(v_args, str);
+    vsnprintf(buf, sizeof(buf), str, v_args);
+    va_end(v_args);
+
+    log_string(buf);
 }
 
 

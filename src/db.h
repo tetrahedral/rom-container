@@ -1,6 +1,10 @@
 #ifndef _ROM_DB_H_
 #define _ROM_DB_H_
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 /***************************************************************************
  *  Original Diku Mud copyright (C) 1990, 1991 by Sebastian Hammer,	   *
  *  Michael Seifert, Hans Henrik St{rfeldt, Tom Madsen, and Katja Nyboe.   *
@@ -53,6 +57,7 @@ void convert_obj(OBJ_INDEX_DATA *obj);
 void bug_area(const char *str, int param, FILE *fp,
               const char *area_str);  /* report a bug in an area file */
 void bug(const char *str, int param); /* report a bug */
+void bugf(const char *str, ...);
 
 /* macro for flag swapping */
 #define GET_UNSET(flag1, flag2) (~(flag1) & ((flag1) | (flag2)))
@@ -94,5 +99,9 @@ void reset_area(AREA_DATA *pArea);
 void convert_mobile(MOB_INDEX_DATA *pMobIndex); /* OLC ROM */
 void convert_objects(void);                     /* OLC ROM */
 void convert_object(OBJ_INDEX_DATA *pObjIndex); /* OLC ROM */
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif /* _ROM_DB_H_ */

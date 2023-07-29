@@ -1,6 +1,10 @@
 #ifndef _ROM_MAGIC_H_
 #define _ROM_MAGIC_H_
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 /***************************************************************************
  *  Original Diku Mud copyright (C) 1990, 1991 by Sebastian Hammer,	   *
  *  Michael Seifert, Hans Henrik St{rfeldt, Tom Madsen, and Katja Nyboe.   *
@@ -132,5 +136,9 @@ DECLARE_SPELL_FUN(spell_gas_breath);
 DECLARE_SPELL_FUN(spell_lightning_breath);
 DECLARE_SPELL_FUN(spell_general_purpose);
 DECLARE_SPELL_FUN(spell_high_explosive);
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif /* _ROM_MAGIC_H_ */

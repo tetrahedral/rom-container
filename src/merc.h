@@ -92,10 +92,11 @@ typedef void SPELL_FUN(int sn, int level, CHAR_DATA *ch, void *vo, int target);
 /*
  * String and memory management parameters.
  */
-#define MAX_KEY_HASH      1024
-#define MAX_STRING_LENGTH 4608
-#define MAX_INPUT_LENGTH  256
-#define PAGELEN           22
+#define MAX_KEY_HASH       1024
+#define MAX_STRING_LENGTH  4608
+#define MAX_STRING_FMT_BUF 4800
+#define MAX_INPUT_LENGTH   256
+#define PAGELEN            22
 
 
 /*
@@ -1756,8 +1757,7 @@ extern sh_int gsn_recall;
 #define IS_TRUSTED(ch, level) (get_trust((ch)) >= (level))
 #define IS_AFFECTED(ch, sn)   (IS_SET((ch)->affected_by, (sn)))
 
-#define GET_AGE(ch) \
-    ((int)(17 + ((ch)->played + current_time - (ch)->logon) / 72000))
+#define GET_AGE(ch) ((int)(17 + ((ch)->played + current_time - (ch)->logon) / 72000))
 
 #define IS_GOOD(ch)    (ch->alignment >= 350)
 #define IS_EVIL(ch)    (ch->alignment <= -350)
@@ -1765,19 +1765,15 @@ extern sh_int gsn_recall;
 
 #define IS_AWAKE(ch) (ch->position > POS_SLEEPING)
 #define GET_AC(ch, type) \
-    ((ch)->armor[type]   \
-     + (IS_AWAKE(ch) ? dex_app[get_curr_stat(ch, STAT_DEX)].defensive : 0))
-#define GET_HITROLL(ch) \
-    ((ch)->hitroll + str_app[get_curr_stat(ch, STAT_STR)].tohit)
-#define GET_DAMROLL(ch) \
-    ((ch)->damroll + str_app[get_curr_stat(ch, STAT_STR)].todam)
+    ((ch)->armor[type] + (IS_AWAKE(ch) ? dex_app[get_curr_stat(ch, STAT_DEX)].defensive : 0))
+#define GET_HITROLL(ch) ((ch)->hitroll + str_app[get_curr_stat(ch, STAT_STR)].tohit)
+#define GET_DAMROLL(ch) ((ch)->damroll + str_app[get_curr_stat(ch, STAT_STR)].todam)
 
 #define IS_OUTSIDE(ch) (!IS_SET((ch)->in_room->room_flags, ROOM_INDOORS))
 
 #define WAIT_STATE(ch, npulse) ((ch)->wait = UMAX((ch)->wait, (npulse)))
 #define DAZE_STATE(ch, npulse) ((ch)->daze = UMAX((ch)->daze, (npulse)))
-#define get_carry_weight(ch) \
-    ((ch)->carry_weight + (ch)->silver / 10 + (ch)->gold * 2 / 5)
+#define get_carry_weight(ch)   ((ch)->carry_weight + (ch)->silver / 10 + (ch)->gold * 2 / 5)
 
 #define act(format, ch, arg1, arg2, type) \
     act_new((format), (ch), (arg1), (arg2), (type), POS_RESTING)
@@ -1788,16 +1784,14 @@ extern sh_int gsn_recall;
 #define CAN_WEAR(obj, part)       (IS_SET((obj)->wear_flags, (part)))
 #define IS_OBJ_STAT(obj, stat)    (IS_SET((obj)->extra_flags, (stat)))
 #define IS_WEAPON_STAT(obj, stat) (IS_SET((obj)->value[4], (stat)))
-#define WEIGHT_MULT(obj) \
-    ((obj)->item_type == ITEM_CONTAINER ? (obj)->value[4] : 100)
+#define WEIGHT_MULT(obj)          ((obj)->item_type == ITEM_CONTAINER ? (obj)->value[4] : 100)
 
 
 /*
  * Description macros.
  */
-#define PERS(ch, looker)                                                   \
-    (can_see(looker, (ch)) ? (IS_NPC(ch) ? (ch)->short_descr : (ch)->name) \
-                           : "someone")
+#define PERS(ch, looker) \
+    (can_see(looker, (ch)) ? (IS_NPC(ch) ? (ch)->short_descr : (ch)->name) : "someone")
 
 /*
  * Structure for a social in the socials table.
@@ -1881,10 +1875,10 @@ extern WEATHER_DATA   weather_info;
  *   so players can go ahead and telnet to all the other descriptors.
  * Then we close it whenever we need to open a file (e.g. a save file).
  */
-#define PLAYER_DIR "../player/" /* Player files */
-#define GOD_DIR    "../gods/"   /* list of gods */
-#define TEMP_FILE  "../player/romtmp"
-#define NULL_FILE  "/dev/null" /* To reserve one stream */
+#define PLAYER_DIR    "../player/" /* Player files */
+#define GOD_DIR       "../gods/"   /* list of gods */
+#define TEMP_FILE     "../player/romtmp"
+#define NULL_FILE     "/dev/null" /* To reserve one stream */
 #define AREA_LIST     "area.lst"  /* List of areas*/
 #define BUG_FILE      "bugs.txt"  /* For 'bug' and bug()*/
 #define TYPO_FILE     "typos.txt" /* For 'typo'*/
@@ -1933,8 +1927,7 @@ bool can_loot(CHAR_DATA *ch, OBJ_DATA *obj);
 void get_obj(CHAR_DATA *ch, OBJ_DATA *obj, OBJ_DATA *container);
 
 /* act_wiz.c */
-void wiznet(char *string, CHAR_DATA *ch, OBJ_DATA *obj, long flag,
-            long flag_skip, int min_level);
+void wiznet(char *string, CHAR_DATA *ch, OBJ_DATA *obj, long flag, long flag_skip, int min_level);
 
 /* alias.c */
 void substitute_alias(DESCRIPTOR_DATA *d, char *input);
@@ -1951,8 +1944,8 @@ void close_socket(DESCRIPTOR_DATA *dclose);
 void write_to_buffer(DESCRIPTOR_DATA *d, const char *txt, int length);
 void send_to_char(const char *txt, CHAR_DATA *ch);
 void page_to_char(const char *txt, CHAR_DATA *ch);
-void act_new(const char *format, CHAR_DATA *ch, const void *arg1,
-             const void *arg2, int type, int min_pos);
+void act_new(const char *format, CHAR_DATA *ch, const void *arg1, const void *arg2, int type,
+             int min_pos);
 
 /* db.c */
 char *print_flags(int flag);
@@ -1996,7 +1989,9 @@ bool  str_suffix(const char *astr, const char *bstr);
 char *capitalize(const char *str);
 void  append_file(CHAR_DATA *ch, char *file, char *str);
 void  bug(const char *str, int param);
+void  bugf(const char *str, ...);
 void  log_string(const char *str);
+void  log_stringf(const char *str, ...);
 void  tail_chain(void);
 
 void do_areas(CHAR_DATA *ch, char *argument);
@@ -2017,10 +2012,8 @@ bool is_safe(CHAR_DATA *ch, CHAR_DATA *victim);
 bool is_safe_spell(CHAR_DATA *ch, CHAR_DATA *victim, bool area);
 void violence_update(void);
 void multi_hit(CHAR_DATA *ch, CHAR_DATA *victim, int dt);
-bool damage(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int class,
-            bool show);
-bool damage_old(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int class,
-                bool show);
+bool damage(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int class, bool show);
+bool damage_old(CHAR_DATA *ch, CHAR_DATA *victim, int dam, int dt, int class, bool show);
 void update_pos(CHAR_DATA *victim);
 void stop_fighting(CHAR_DATA *ch, bool fBoth);
 void check_killer(CHAR_DATA *ch, CHAR_DATA *victim);
@@ -2029,7 +2022,7 @@ void check_killer(CHAR_DATA *ch, CHAR_DATA *victim);
 void do_flag(CHAR_DATA *ch, char *argument);
 
 /* handler.c */
-bool is_friend(CHAR_DATA *ch, CHAR_DATA *victim);
+bool  is_friend(CHAR_DATA *ch, CHAR_DATA *victim);
 char *material_name(sh_int num); /* OLC */
 AD   *affect_find(AFFECT_DATA *paf, int sn);
 void  affect_check(CHAR_DATA *ch, int where, int vector);
@@ -2135,8 +2128,7 @@ int  slot_lookup(int slot);
 bool saves_spell(int level, CHAR_DATA *victim, int dam_type);
 bool saves_dispel(int dis_level, int spell_level, int duration);
 bool check_dispel(int dis_level, CHAR_DATA *victim, int sn);
-void obj_cast_spell(int sn, int level, CHAR_DATA *ch, CHAR_DATA *victim,
-                    OBJ_DATA *obj);
+void obj_cast_spell(int sn, int level, CHAR_DATA *ch, CHAR_DATA *victim, OBJ_DATA *obj);
 
 /* music.c */
 void do_play(CHAR_DATA *ch, char *argument);

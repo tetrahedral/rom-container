@@ -121,7 +121,7 @@ int slot_lookup(int slot)
 void say_spell(CHAR_DATA *ch, int sn)
 {
     char       buf[MAX_STRING_LENGTH];
-    char       buf2[MAX_STRING_LENGTH];
+    char       buf2[MAX_STRING_FMT_BUF];
     CHAR_DATA *rch;
     char      *pName;
     int        iSyl;
@@ -198,8 +198,8 @@ void say_spell(CHAR_DATA *ch, int sn)
             length = 1;
     }
 
-    sprintf(buf2, "$n utters the words, '%s'.", buf);
-    sprintf(buf, "$n utters the words, '%s'.", skill_table[sn].name);
+    snprintf(buf2, MAX_STRING_FMT_BUF, "$n utters the words, '%s'.", buf);
+    snprintf(buf, MAX_STRING_LENGTH, "$n utters the words, '%s'.", skill_table[sn].name);
 
     for (rch = ch->in_room->people; rch; rch = rch->next_in_room) {
         if (rch != ch)

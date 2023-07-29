@@ -126,7 +126,7 @@ bool check_ban(char *site, int type)
 
 void ban_site(CHAR_DATA *ch, char *argument, bool fPerm)
 {
-    char      buf[MAX_STRING_LENGTH], buf2[MAX_STRING_LENGTH];
+    char      buf[MAX_STRING_FMT_BUF], buf2[MAX_STRING_LENGTH];
     char      arg1[MAX_INPUT_LENGTH], arg2[MAX_INPUT_LENGTH];
     char     *name;
     BUFFER   *buffer;
@@ -146,10 +146,10 @@ void ban_site(CHAR_DATA *ch, char *argument, bool fPerm)
 
         add_buf(buffer, "Banned sites  level  type     status\n\r");
         for (pban = ban_list; pban != NULL; pban = pban->next) {
-            sprintf(buf2, "%s%s%s",
+            snprintf(buf2, MAX_STRING_LENGTH, "%s%s%s",
                     IS_SET(pban->ban_flags, BAN_PREFIX) ? "*" : "", pban->name,
                     IS_SET(pban->ban_flags, BAN_SUFFIX) ? "*" : "");
-            sprintf(buf, "%-12s    %-3d  %-7s  %s\n\r", buf2, pban->level,
+            snprintf(buf, MAX_STRING_FMT_BUF, "%-12s    %-3d  %-7s  %s\n\r", buf2, pban->level,
                     IS_SET(pban->ban_flags, BAN_NEWBIES)  ? "newbies"
                     : IS_SET(pban->ban_flags, BAN_PERMIT) ? "permit"
                     : IS_SET(pban->ban_flags, BAN_ALL)    ? "all"
