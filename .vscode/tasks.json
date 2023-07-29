@@ -3,10 +3,21 @@
     "tasks": [
         {
             "label": "compile .c file",
-            "command": "gcc",
+            "command": "/usr/bin/gcc",
             "args": [
-                "-std=gnu99", "-Wall", "-Wextra", "-O", "-g", "-c", "${file}"
+                "-std=gnu99",
+                "-Wall",
+                "-Wextra",
+                "-O",
+                "-g",
+                "-pedantic",
+                "-Wstrict-prototypes",
+                "-Wmissing-prototypes",
+                "-Wno-unused-parameter",
+                "-Wno-unused-function",
+                "-c", "${file}"
             ],
+            "problemMatcher": ["$gcc"],
             "group": {
                 "kind": "build"
             }

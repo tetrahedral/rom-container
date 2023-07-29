@@ -1,9 +1,9 @@
 {
     "[c]": {
-        "editor.detectIndentation": true,
+        "editor.detectIndentation": false,
         "editor.indentSize": 4,
-        "editor.tabSize": 4,
-        "editor.renderWhitespace": "boundary"
+        "editor.tabSize": 8,
+        "editor.renderWhitespace": "selection"
     },
     "files.associations": {
         "*.toml": "toml",
@@ -20,6 +20,30 @@
         "stdbool.h": "c",
         "lua.h": "c",
         "lauxlib.h": "c",
-        "lualib.h": "c"
+        "lualib.h": "c",
+        "errno.h": "c",
+        "dirent.h": "c",
+        "script_api.h": "c"
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/*.o": true,
+    },
+    "emeraldwalk.runonsave": {
+        "commands": [
+            // {
+            //     "match": "\\.c$",
+            //     "cmd": "cd src && make ${fileBasenameNoExt}.o"
+            // },
+            // {
+            //     "match": "\\.h$",
+            //     "cmd": "cd src && make"
+            // }
+        ]
     }
 }
