@@ -45,5 +45,6 @@
             //     "cmd": "cd src && make"
             // }
         ]
-    }
+    },
+    "cmake.configureOnOpen": false
 }

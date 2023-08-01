@@ -5,6 +5,7 @@ Diagnostics:
     Suppress: []
     ClangTidy:
         Add: [ 'modernize*', 'bugprone-*', 'clang-analyzer-*' ]
+        Remove: [ 'bugprone-easily-swappable-parameters', 'bugprone-assignment-in-if-condition' ]
 
 InlayHints:
     Enabled: Yes

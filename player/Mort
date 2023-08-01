@@ -1,7 +1,7 @@
 #PLAYER
 Name Mort~
 Id   1690570581
-LogO 1690577083
+LogO 1690850437
 Vers 5
 Prom [%R] (%r) -[%z]- <%l>%c~
 Race human~
@@ -9,11 +9,11 @@ Sex  1
 Cla  3
 Levl 60
 Sec  0
-Plyd 4357
+Plyd 7067
 Not  0 0 0 0 0
 Scro 22
 Room 3713
-HMV  33 33 102 102 106 106
+HMV  20 20 100 100 100 100
 Gold 1000
 Silv 1200
 Exp  2029
@@ -25,7 +25,7 @@ Trai 1
 Save  -1
 Alig  0
 Hit   1
-ACs 10 10 10 10
+ACs 87 86 86 99
 Wimp  5
 Attr 18 18 18 18 18
 AMod 0 0 0 0 0

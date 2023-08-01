@@ -25,6 +25,9 @@
  *	ROM license, in the file Rom24/doc/rom.license			   *
  ***************************************************************************/
 
+#include "scripting.h" /* interp macros mess up lua includes */
+#include "interp.h"
+
 #include <sys/types.h>
 #include <ctype.h>
 #include <stdbool.h>
@@ -33,9 +36,11 @@
 #include <string.h>
 #include <time.h>
 
-#include "merc.h"
-#include "interp.h"
 #include "olc.h"
+#include "merc.h"
+
+#include "ascii_bits.h"
+
 
 static bool check_social(CHAR_DATA *ch, char *command, char *argument);
 
@@ -427,8 +432,7 @@ void interpret(CHAR_DATA *ch, char *argument)
     found = FALSE;
     trust = get_trust(ch);
     for (cmd = 0; cmd_table[cmd].name[0] != '\0'; cmd++) {
-        if (command[0] == cmd_table[cmd].name[0]
-            && !str_prefix(command, cmd_table[cmd].name)
+        if (command[0] == cmd_table[cmd].name[0] && !str_prefix(command, cmd_table[cmd].name)
             && cmd_table[cmd].level <= trust) {
             found = TRUE;
             break;
@@ -441,8 +445,7 @@ void interpret(CHAR_DATA *ch, char *argument)
     if (cmd_table[cmd].log == LOG_NEVER)
         strcpy(logline, "");
 
-    if ((!IS_NPC(ch) && IS_SET(ch->act, PLR_LOG)) || fLogAll
-        || cmd_table[cmd].log == LOG_ALWAYS) {
+    if ((!IS_NPC(ch) && IS_SET(ch->act, PLR_LOG)) || fLogAll || cmd_table[cmd].log == LOG_ALWAYS) {
         sprintf(log_buf, "Log %s: %s", ch->name, logline);
         wiznet(log_buf, ch, NULL, WIZ_SECURE, 0, get_trust(ch));
         log_string(log_buf);
@@ -455,6 +458,12 @@ void interpret(CHAR_DATA *ch, char *argument)
     }
 
     if (!found) {
+        /*
+         * Look for scripts handling this command.
+         */
+        if (do_scriptcmd(command, ch, argument) == S_OK)
+            return;
+
         /*
          * Look for command in socials table.
          */
@@ -588,8 +597,8 @@ static bool check_social(CHAR_DATA *ch, char *command, char *argument)
         act(social_table[cmd].char_found, ch, NULL, victim, TO_CHAR);
         act(social_table[cmd].vict_found, ch, NULL, victim, TO_VICT);
 
-        if (!IS_NPC(ch) && IS_NPC(victim) && !IS_AFFECTED(victim, AFF_CHARM)
-            && IS_AWAKE(victim) && victim->desc == NULL) {
+        if (!IS_NPC(ch) && IS_NPC(victim) && !IS_AFFECTED(victim, AFF_CHARM) && IS_AWAKE(victim)
+            && victim->desc == NULL) {
             switch (number_bits(4)) {
             case 0:
 
@@ -601,8 +610,7 @@ static bool check_social(CHAR_DATA *ch, char *command, char *argument)
             case 6:
             case 7:
             case 8:
-                act(social_table[cmd].others_found, victim, NULL, ch,
-                    TO_NOTVICT);
+                act(social_table[cmd].others_found, victim, NULL, ch, TO_NOTVICT);
                 act(social_table[cmd].char_found, victim, NULL, ch, TO_CHAR);
                 act(social_table[cmd].vict_found, victim, NULL, ch, TO_VICT);
                 break;
@@ -732,8 +740,8 @@ void do_commands(CHAR_DATA *ch, char *argument)
 
     col = 0;
     for (cmd = 0; cmd_table[cmd].name[0] != '\0'; cmd++) {
-        if (cmd_table[cmd].level < LEVEL_HERO
-            && cmd_table[cmd].level <= get_trust(ch) && cmd_table[cmd].show) {
+        if (cmd_table[cmd].level < LEVEL_HERO && cmd_table[cmd].level <= get_trust(ch)
+            && cmd_table[cmd].show) {
             sprintf(buf, "%-12s", cmd_table[cmd].name);
             send_to_char(buf, ch);
             if (++col % 6 == 0)
@@ -754,8 +762,8 @@ void do_wizhelp(CHAR_DATA *ch, char *argument)
 
     col = 0;
     for (cmd = 0; cmd_table[cmd].name[0] != '\0'; cmd++) {
-        if (cmd_table[cmd].level >= LEVEL_HERO
-            && cmd_table[cmd].level <= get_trust(ch) && cmd_table[cmd].show) {
+        if (cmd_table[cmd].level >= LEVEL_HERO && cmd_table[cmd].level <= get_trust(ch)
+            && cmd_table[cmd].show) {
             sprintf(buf, "%-12s", cmd_table[cmd].name);
             send_to_char(buf, ch);
             if (++col % 6 == 0)

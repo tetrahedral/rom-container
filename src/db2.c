@@ -205,13 +205,11 @@ void load_mobiles(FILE *fp)
         pMobIndex->long_descr[0]  = UPPER(pMobIndex->long_descr[0]);
         pMobIndex->description[0] = UPPER(pMobIndex->description[0]);
 
-        pMobIndex->act =
-            fread_flag(fp) | ACT_IS_NPC | race_table[pMobIndex->race].act;
-        pMobIndex->affected_by =
-            fread_flag(fp) | race_table[pMobIndex->race].aff;
-        pMobIndex->pShop     = NULL;
-        pMobIndex->alignment = fread_number(fp);
-        pMobIndex->group     = fread_number(fp);
+        pMobIndex->act         = fread_flag(fp) | ACT_IS_NPC | race_table[pMobIndex->race].act;
+        pMobIndex->affected_by = fread_flag(fp) | race_table[pMobIndex->race].aff;
+        pMobIndex->pShop       = NULL;
+        pMobIndex->alignment   = fread_number(fp);
+        pMobIndex->group       = fread_number(fp);
 
         pMobIndex->level   = fread_number(fp);
         pMobIndex->hitroll = fread_number(fp);
@@ -245,11 +243,10 @@ void load_mobiles(FILE *fp)
         pMobIndex->ac[AC_EXOTIC] = fread_number(fp) * 10;
 
         /* read flags and add in data from the race table */
-        pMobIndex->off_flags = fread_flag(fp) | race_table[pMobIndex->race].off;
-        pMobIndex->imm_flags = fread_flag(fp) | race_table[pMobIndex->race].imm;
-        pMobIndex->res_flags = fread_flag(fp) | race_table[pMobIndex->race].res;
-        pMobIndex->vuln_flags =
-            fread_flag(fp) | race_table[pMobIndex->race].vuln;
+        pMobIndex->off_flags  = fread_flag(fp) | race_table[pMobIndex->race].off;
+        pMobIndex->imm_flags  = fread_flag(fp) | race_table[pMobIndex->race].imm;
+        pMobIndex->res_flags  = fread_flag(fp) | race_table[pMobIndex->race].res;
+        pMobIndex->vuln_flags = fread_flag(fp) | race_table[pMobIndex->race].vuln;
 
         /* vital statistics */
         pMobIndex->start_pos   = position_lookup(fread_word(fp));
@@ -575,9 +572,8 @@ void convert_objects(void)
                         break;
                     }
 
-                    pObj->level = pObj->level < 1
-                                    ? pMob->level - 2
-                                    : UMIN(pObj->level, pMob->level - 2);
+                    pObj->level =
+                        pObj->level < 1 ? pMob->level - 2 : UMIN(pObj->level, pMob->level - 2);
                     break;
 
                 case 'P': {
@@ -596,22 +592,19 @@ void convert_objects(void)
                         break;
                     }
 
-                    pObj->level = pObj->level < 1
-                                    ? pObjTo->level
-                                    : UMIN(pObj->level, pObjTo->level);
+                    pObj->level =
+                        pObj->level < 1 ? pObjTo->level : UMIN(pObj->level, pObjTo->level);
                 } break;
 
                 case 'G':
                 case 'E':
                     if (!(pObj = get_obj_index(pReset->arg1))) {
-                        bug("Convert_objects: 'E' or 'G': bad vnum %d.",
-                            pReset->arg1);
+                        bug("Convert_objects: 'E' or 'G': bad vnum %d.", pReset->arg1);
                         break;
                     }
 
                     if (!pMob) {
-                        bug("Convert_objects: 'E' or 'G': null mob for vnum %d.",
-                            pReset->arg1);
+                        bug("Convert_objects: 'E' or 'G': null mob for vnum %d.", pReset->arg1);
                         break;
                     }
 
@@ -641,9 +634,8 @@ void convert_objects(void)
                             break;
                         }
                     } else
-                        pObj->level = pObj->level < 1
-                                        ? pMob->level
-                                        : UMIN(pObj->level, pMob->level);
+                        pObj->level =
+                            pObj->level < 1 ? pMob->level : UMIN(pObj->level, pMob->level);
                     break;
                 } /* switch ( pReset->command ) */
             }

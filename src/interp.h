@@ -39,19 +39,6 @@ extern "C" {
 /* wrapper function for safe command execution */
 void do_function(CHAR_DATA *ch, DO_FUN *do_fun, char *argument);
 
-/* for command types */
-#define ML MAX_LEVEL      /* implementor */
-#define L1 MAX_LEVEL - 1  /* creator */
-#define L2 MAX_LEVEL - 2  /* supreme being */
-#define L3 MAX_LEVEL - 3  /* deity */
-#define L4 MAX_LEVEL - 4  /* god */
-#define L5 MAX_LEVEL - 5  /* immortal */
-#define L6 MAX_LEVEL - 6  /* demigod */
-#define L7 MAX_LEVEL - 7  /* angel */
-#define L8 MAX_LEVEL - 8  /* avatar */
-#define IM LEVEL_IMMORTAL /* avatar */
-#define HE LEVEL_HERO     /* hero */
-
 #define COM_INGORE 1
 
 

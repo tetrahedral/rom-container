@@ -25,7 +25,7 @@
         {
             "label": "make",
             "command": "make",
-            "args": ["clean", "rom"],
+            "args": ["rom"],
             "options": {
                 "cwd": "${workspaceFolder}"
             },
@@ -35,6 +35,14 @@
                     "autoDetect",
                     "${workspaceFolder}/src/"
                 ]
+            },
+            "presentation": {
+              "echo": true,
+              "reveal": "silent",
+              "focus": false,
+              "panel": "dedicated",
+              "showReuseMessage": false,
+              "clear": true
             },
             "group": {
                 "kind": "build",

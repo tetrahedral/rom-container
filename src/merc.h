@@ -92,10 +92,10 @@ typedef void SPELL_FUN(int sn, int level, CHAR_DATA *ch, void *vo, int target);
 /*
  * String and memory management parameters.
  */
-#define MAX_KEY_HASH       1024
+#define MAX_KEY_HASH       (1<<10)
 #define MAX_STRING_LENGTH  4608
 #define MAX_STRING_FMT_BUF 4800
-#define MAX_INPUT_LENGTH   256
+#define MAX_INPUT_LENGTH   (1<<8)
 #define PAGELEN            22
 
 
@@ -104,7 +104,7 @@ typedef void SPELL_FUN(int sn, int level, CHAR_DATA *ch, void *vo, int target);
  * Increase the max'es if you add more of something.
  * Adjust the pulse numbers to suit yourself.
  */
-#define MAX_SOCIALS        256
+#define MAX_SOCIALS        (1<<8)
 #define MAX_SKILL          150
 #define MAX_GROUP          30
 #define MAX_IN_GROUP       15
@@ -140,12 +140,12 @@ typedef void SPELL_FUN(int sn, int level, CHAR_DATA *ch, void *vo, int target);
  * Site ban structure.
  */
 
-#define BAN_SUFFIX    A
-#define BAN_PREFIX    B
-#define BAN_NEWBIES   C
-#define BAN_ALL       D
-#define BAN_PERMIT    E
-#define BAN_PERMANENT F
+#define BAN_SUFFIX    1
+#define BAN_PREFIX    2
+#define BAN_NEWBIES   4
+#define BAN_ALL       8
+#define BAN_PERMIT    16
+#define BAN_PERMANENT 32
 
 struct ban_data {
     BAN_DATA *next;
@@ -465,70 +465,32 @@ struct kill_data {
 #define GROUP_VNUM_TROLLS  2100
 #define GROUP_VNUM_OGRES   2101
 
-
-/* RT ASCII conversions -- used so we can have letters in this file */
-
-#define A 1
-#define B 2
-#define C 4
-#define D 8
-#define E 16
-#define F 32
-#define G 64
-#define H 128
-
-#define I 256
-#define J 512
-#define K 1024
-#define L 2048
-#define M 4096
-#define N 8192
-#define O 16384
-#define P 32768
-
-#define Q 65536
-#define R 131072
-#define S 262144
-#define T 524288
-#define U 1048576
-#define V 2097152
-#define W 4194304
-#define X 8388608
-
-#define Y  16777216
-#define Z  33554432
-#define aa 67108864 /* doubled due to conflicts */
-#define bb 134217728
-#define cc 268435456
-#define dd 536870912
-#define ee 1073741824
-
 /*
  * ACT bits for mobs.
  * Used in #MOBILES.
  */
-#define ACT_IS_NPC        (A) /* Auto set for mobs	*/
-#define ACT_SENTINEL      (B) /* Stays in one room	*/
-#define ACT_SCAVENGER     (C) /* Picks up objects	*/
-#define ACT_AGGRESSIVE    (F) /* Attacks PC's		*/
-#define ACT_STAY_AREA     (G) /* Won't leave area	*/
-#define ACT_WIMPY         (H)
-#define ACT_PET           (I) /* Auto set for pets	*/
-#define ACT_TRAIN         (J) /* Can train PC's	*/
-#define ACT_PRACTICE      (K) /* Can practice PC's	*/
-#define ACT_UNDEAD        (O)
-#define ACT_CLERIC        (Q)
-#define ACT_MAGE          (R)
-#define ACT_THIEF         (S)
-#define ACT_WARRIOR       (T)
-#define ACT_NOALIGN       (U)
-#define ACT_NOPURGE       (V)
-#define ACT_OUTDOORS      (W)
-#define ACT_INDOORS       (Y)
-#define ACT_IS_HEALER     (aa)
-#define ACT_GAIN          (bb)
-#define ACT_UPDATE_ALWAYS (cc)
-#define ACT_IS_CHANGER    (dd)
+#define ACT_IS_NPC        (1<<0) /* Auto set for mobs	*/
+#define ACT_SENTINEL      (1<<1) /* Stays in one room	*/
+#define ACT_SCAVENGER     (1<<2) /* Picks up objects	*/
+#define ACT_AGGRESSIVE    (1<<5) /* Attacks PC's		*/
+#define ACT_STAY_AREA     (1<<6) /* Won't leave area	*/
+#define ACT_WIMPY         (1<<7)
+#define ACT_PET           (1<<8) /* Auto set for pets	*/
+#define ACT_TRAIN         (1<<9) /* Can train PC's	*/
+#define ACT_PRACTICE      (1<<10) /* Can practice PC's	*/
+#define ACT_UNDEAD        (1<<14)
+#define ACT_CLERIC        (1<<16)
+#define ACT_MAGE          (1<<17)
+#define ACT_THIEF         (1<<18)
+#define ACT_WARRIOR       (1<<19)
+#define ACT_NOALIGN       (1<<20)
+#define ACT_NOPURGE       (1<<21)
+#define ACT_OUTDOORS      (1<<22)
+#define ACT_INDOORS       (1<<24)
+#define ACT_IS_HEALER     (1<<26)
+#define ACT_GAIN          (1<<27)
+#define ACT_UPDATE_ALWAYS (1<<28)
+#define ACT_IS_CHANGER    (1<<29)
 
 /* damage classes */
 #define DAM_NONE      0
@@ -553,27 +515,27 @@ struct kill_data {
 #define DAM_SOUND     19
 
 /* OFF bits for mobiles */
-#define OFF_AREA_ATTACK (A)
-#define OFF_BACKSTAB    (B)
-#define OFF_BASH        (C)
-#define OFF_BERSERK     (D)
-#define OFF_DISARM      (E)
-#define OFF_DODGE       (F)
-#define OFF_FADE        (G)
-#define OFF_FAST        (H)
-#define OFF_KICK        (I)
-#define OFF_KICK_DIRT   (J)
-#define OFF_PARRY       (K)
-#define OFF_RESCUE      (L)
-#define OFF_TAIL        (M)
-#define OFF_TRIP        (N)
-#define OFF_CRUSH       (O)
-#define ASSIST_ALL      (P)
-#define ASSIST_ALIGN    (Q)
-#define ASSIST_RACE     (R)
-#define ASSIST_PLAYERS  (S)
-#define ASSIST_GUARD    (T)
-#define ASSIST_VNUM     (U)
+#define OFF_AREA_ATTACK (1<<0)
+#define OFF_BACKSTAB    (1<<1)
+#define OFF_BASH        (1<<2)
+#define OFF_BERSERK     (1<<3)
+#define OFF_DISARM      (1<<4)
+#define OFF_DODGE       (1<<5)
+#define OFF_FADE        (1<<6)
+#define OFF_FAST        (1<<7)
+#define OFF_KICK        (1<<8)
+#define OFF_KICK_DIRT   (1<<9)
+#define OFF_PARRY       (1<<10)
+#define OFF_RESCUE      (1<<11)
+#define OFF_TAIL        (1<<12)
+#define OFF_TRIP        (1<<13)
+#define OFF_CRUSH       (1<<14)
+#define ASSIST_ALL      (1<<15)
+#define ASSIST_ALIGN    (1<<16)
+#define ASSIST_RACE     (1<<17)
+#define ASSIST_PLAYERS  (1<<18)
+#define ASSIST_GUARD    (1<<19)
+#define ASSIST_VNUM     (1<<20)
 
 /* return values for check_imm */
 #define IS_NORMAL     0
@@ -582,172 +544,172 @@ struct kill_data {
 #define IS_VULNERABLE 3
 
 /* IMM bits for mobs */
-#define IMM_SUMMON    (A)
-#define IMM_CHARM     (B)
-#define IMM_MAGIC     (C)
-#define IMM_WEAPON    (D)
-#define IMM_BASH      (E)
-#define IMM_PIERCE    (F)
-#define IMM_SLASH     (G)
-#define IMM_FIRE      (H)
-#define IMM_COLD      (I)
-#define IMM_LIGHTNING (J)
-#define IMM_ACID      (K)
-#define IMM_POISON    (L)
-#define IMM_NEGATIVE  (M)
-#define IMM_HOLY      (N)
-#define IMM_ENERGY    (O)
-#define IMM_MENTAL    (P)
-#define IMM_DISEASE   (Q)
-#define IMM_DROWNING  (R)
-#define IMM_LIGHT     (S)
-#define IMM_SOUND     (T)
-#define IMM_WOOD      (X)
-#define IMM_SILVER    (Y)
-#define IMM_IRON      (Z)
+#define IMM_SUMMON    (1)
+#define IMM_CHARM     (2)
+#define IMM_MAGIC     (4)
+#define IMM_WEAPON    (8)
+#define IMM_BASH      (16)
+#define IMM_PIERCE    (32)
+#define IMM_SLASH     (64)
+#define IMM_FIRE      (1<<7)
+#define IMM_COLD      (1<<8)
+#define IMM_LIGHTNING (1<<9)
+#define IMM_ACID      (1<<10)
+#define IMM_POISON    (1<<11)
+#define IMM_NEGATIVE  (1<<12)
+#define IMM_HOLY      (1<<13)
+#define IMM_ENERGY    (1<<14)
+#define IMM_MENTAL    (1<<15)
+#define IMM_DISEASE   (1<<16)
+#define IMM_DROWNING  (1<<17)
+#define IMM_LIGHT     (1<<18)
+#define IMM_SOUND     (1<<19)
+#define IMM_WOOD      (1<<23)
+#define IMM_SILVER    (1<<24)
+#define IMM_IRON      (1<<25)
 
 /* RES bits for mobs */
-#define RES_SUMMON    (A)
-#define RES_CHARM     (B)
-#define RES_MAGIC     (C)
-#define RES_WEAPON    (D)
-#define RES_BASH      (E)
-#define RES_PIERCE    (F)
-#define RES_SLASH     (G)
-#define RES_FIRE      (H)
-#define RES_COLD      (I)
-#define RES_LIGHTNING (J)
-#define RES_ACID      (K)
-#define RES_POISON    (L)
-#define RES_NEGATIVE  (M)
-#define RES_HOLY      (N)
-#define RES_ENERGY    (O)
-#define RES_MENTAL    (P)
-#define RES_DISEASE   (Q)
-#define RES_DROWNING  (R)
-#define RES_LIGHT     (S)
-#define RES_SOUND     (T)
-#define RES_WOOD      (X)
-#define RES_SILVER    (Y)
-#define RES_IRON      (Z)
+#define RES_SUMMON    (1)
+#define RES_CHARM     (2)
+#define RES_MAGIC     (4)
+#define RES_WEAPON    (8)
+#define RES_BASH      (16)
+#define RES_PIERCE    (32)
+#define RES_SLASH     (64)
+#define RES_FIRE      (1<<7)
+#define RES_COLD      (1<<8)
+#define RES_LIGHTNING (1<<9)
+#define RES_ACID      (1<<10)
+#define RES_POISON    (1<<11)
+#define RES_NEGATIVE  (1<<12)
+#define RES_HOLY      (1<<13)
+#define RES_ENERGY    (1<<14)
+#define RES_MENTAL    (1<<15)
+#define RES_DISEASE   (1<<16)
+#define RES_DROWNING  (1<<17)
+#define RES_LIGHT     (1<<18)
+#define RES_SOUND     (1<<19)
+#define RES_WOOD      (1<<23)
+#define RES_SILVER    (1<<24)
+#define RES_IRON      (1<<25)
 
 /* VULN bits for mobs */
-#define VULN_SUMMON    (A)
-#define VULN_CHARM     (B)
-#define VULN_MAGIC     (C)
-#define VULN_WEAPON    (D)
-#define VULN_BASH      (E)
-#define VULN_PIERCE    (F)
-#define VULN_SLASH     (G)
-#define VULN_FIRE      (H)
-#define VULN_COLD      (I)
-#define VULN_LIGHTNING (J)
-#define VULN_ACID      (K)
-#define VULN_POISON    (L)
-#define VULN_NEGATIVE  (M)
-#define VULN_HOLY      (N)
-#define VULN_ENERGY    (O)
-#define VULN_MENTAL    (P)
-#define VULN_DISEASE   (Q)
-#define VULN_DROWNING  (R)
-#define VULN_LIGHT     (S)
-#define VULN_SOUND     (T)
-#define VULN_WOOD      (X)
-#define VULN_SILVER    (Y)
-#define VULN_IRON      (Z)
+#define VULN_SUMMON    (1)
+#define VULN_CHARM     (2)
+#define VULN_MAGIC     (4)
+#define VULN_WEAPON    (8)
+#define VULN_BASH      (16)
+#define VULN_PIERCE    (32)
+#define VULN_SLASH     (64)
+#define VULN_FIRE      (1<<7)
+#define VULN_COLD      (1<<8)
+#define VULN_LIGHTNING (1<<9)
+#define VULN_ACID      (1<<10)
+#define VULN_POISON    (1<<11)
+#define VULN_NEGATIVE  (1<<12)
+#define VULN_HOLY      (1<<13)
+#define VULN_ENERGY    (1<<14)
+#define VULN_MENTAL    (1<<15)
+#define VULN_DISEASE   (1<<16)
+#define VULN_DROWNING  (1<<17)
+#define VULN_LIGHT     (1<<18)
+#define VULN_SOUND     (1<<19)
+#define VULN_WOOD      (1<<23)
+#define VULN_SILVER    (1<<24)
+#define VULN_IRON      (1<<25)
 
 /* body form */
-#define FORM_EDIBLE        (A)
-#define FORM_POISON        (B)
-#define FORM_MAGICAL       (C)
-#define FORM_INSTANT_DECAY (D)
-#define FORM_OTHER         (E) /* defined by material bit */
+#define FORM_EDIBLE        (1)
+#define FORM_POISON        (2)
+#define FORM_MAGICAL       (4)
+#define FORM_INSTANT_DECAY (8)
+#define FORM_OTHER         (1<<4) /* defined by material bit */
 
 /* actual form */
-#define FORM_ANIMAL     (G)
-#define FORM_SENTIENT   (H)
-#define FORM_UNDEAD     (I)
-#define FORM_CONSTRUCT  (J)
-#define FORM_MIST       (K)
-#define FORM_INTANGIBLE (L)
+#define FORM_ANIMAL     (64)
+#define FORM_SENTIENT   (1<<7)
+#define FORM_UNDEAD     (1<<8)
+#define FORM_CONSTRUCT  (1<<9)
+#define FORM_MIST       (1<<10)
+#define FORM_INTANGIBLE (1<<11)
 
-#define FORM_BIPED      (M)
-#define FORM_CENTAUR    (N)
-#define FORM_INSECT     (O)
-#define FORM_SPIDER     (P)
-#define FORM_CRUSTACEAN (Q)
-#define FORM_WORM       (R)
-#define FORM_BLOB       (S)
+#define FORM_BIPED      (1<<12)
+#define FORM_CENTAUR    (1<<13)
+#define FORM_INSECT     (1<<14)
+#define FORM_SPIDER     (1<<15)
+#define FORM_CRUSTACEAN (1<<16)
+#define FORM_WORM       (1<<17)
+#define FORM_BLOB       (1<<18)
 
-#define FORM_MAMMAL     (V)
-#define FORM_BIRD       (W)
-#define FORM_REPTILE    (X)
-#define FORM_SNAKE      (Y)
-#define FORM_DRAGON     (Z)
-#define FORM_AMPHIBIAN  (aa)
-#define FORM_FISH       (bb)
-#define FORM_COLD_BLOOD (cc)
+#define FORM_MAMMAL     (1<<21)
+#define FORM_BIRD       (1<<22)
+#define FORM_REPTILE    (1<<23)
+#define FORM_SNAKE      (1<<24)
+#define FORM_DRAGON     (1<<25)
+#define FORM_AMPHIBIAN  (1<<26)
+#define FORM_FISH       (1<<27)
+#define FORM_COLD_BLOOD (1<<28)
 
 /* body parts */
-#define PART_HEAD        (A)
-#define PART_ARMS        (B)
-#define PART_LEGS        (C)
-#define PART_HEART       (D)
-#define PART_BRAINS      (E)
-#define PART_GUTS        (F)
-#define PART_HANDS       (G)
-#define PART_FEET        (H)
-#define PART_FINGERS     (I)
-#define PART_EAR         (J)
-#define PART_EYE         (K)
-#define PART_LONG_TONGUE (L)
-#define PART_EYESTALKS   (M)
-#define PART_TENTACLES   (N)
-#define PART_FINS        (O)
-#define PART_WINGS       (P)
-#define PART_TAIL        (Q)
+#define PART_HEAD        (1)
+#define PART_ARMS        (2)
+#define PART_LEGS        (4)
+#define PART_HEART       (8)
+#define PART_BRAINS      (16)
+#define PART_GUTS        (32)
+#define PART_HANDS       (64)
+#define PART_FEET        (1<<7)
+#define PART_FINGERS     (1<<8)
+#define PART_EAR         (1<<9)
+#define PART_EYE         (1<<10)
+#define PART_LONG_TONGUE (1<<11)
+#define PART_EYESTALKS   (1<<12)
+#define PART_TENTACLES   (1<<13)
+#define PART_FINS        (1<<14)
+#define PART_WINGS       (1<<15)
+#define PART_TAIL        (1<<16)
 /* for combat */
-#define PART_CLAWS  (U)
-#define PART_FANGS  (V)
-#define PART_HORNS  (W)
-#define PART_SCALES (X)
-#define PART_TUSKS  (Y)
+#define PART_CLAWS  (1<<20)
+#define PART_FANGS  (1<<21)
+#define PART_HORNS  (1<<22)
+#define PART_SCALES (1<<23)
+#define PART_TUSKS  (1<<24)
 
 
 /*
  * Bits for 'affected_by'.
  * Used in #MOBILES.
  */
-#define AFF_BLIND         (A)
-#define AFF_INVISIBLE     (B)
-#define AFF_DETECT_EVIL   (C)
-#define AFF_DETECT_INVIS  (D)
-#define AFF_DETECT_MAGIC  (E)
-#define AFF_DETECT_HIDDEN (F)
-#define AFF_DETECT_GOOD   (G)
-#define AFF_SANCTUARY     (H)
-#define AFF_FAERIE_FIRE   (I)
-#define AFF_INFRARED      (J)
-#define AFF_CURSE         (K)
-#define AFF_UNUSED_FLAG   (L) /* unused */
-#define AFF_POISON        (M)
-#define AFF_PROTECT_EVIL  (N)
-#define AFF_PROTECT_GOOD  (O)
-#define AFF_SNEAK         (P)
-#define AFF_HIDE          (Q)
-#define AFF_SLEEP         (R)
-#define AFF_CHARM         (S)
-#define AFF_FLYING        (T)
-#define AFF_PASS_DOOR     (U)
-#define AFF_HASTE         (V)
-#define AFF_CALM          (W)
-#define AFF_PLAGUE        (X)
-#define AFF_WEAKEN        (Y)
-#define AFF_DARK_VISION   (Z)
-#define AFF_BERSERK       (aa)
-#define AFF_SWIM          (bb)
-#define AFF_REGENERATION  (cc)
-#define AFF_SLOW          (dd)
+#define AFF_BLIND         (1)
+#define AFF_INVISIBLE     (2)
+#define AFF_DETECT_EVIL   (4)
+#define AFF_DETECT_INVIS  (8)
+#define AFF_DETECT_MAGIC  (16)
+#define AFF_DETECT_HIDDEN (32)
+#define AFF_DETECT_GOOD   (64)
+#define AFF_SANCTUARY     (1<<7)
+#define AFF_FAERIE_FIRE   (1<<8)
+#define AFF_INFRARED      (1<<9)
+#define AFF_CURSE         (1<<10)
+#define AFF_UNUSED_FLAG   (1<<11) /* unused */
+#define AFF_POISON        (1<<12)
+#define AFF_PROTECT_EVIL  (1<<13)
+#define AFF_PROTECT_GOOD  (1<<14)
+#define AFF_SNEAK         (1<<15)
+#define AFF_HIDE          (1<<16)
+#define AFF_SLEEP         (1<<17)
+#define AFF_CHARM         (1<<18)
+#define AFF_FLYING        (1<<19)
+#define AFF_PASS_DOOR     (1<<20)
+#define AFF_HASTE         (1<<21)
+#define AFF_CALM          (1<<22)
+#define AFF_PLAGUE        (1<<23)
+#define AFF_WEAKEN        (1<<24)
+#define AFF_DARK_VISION   (1<<25)
+#define AFF_BERSERK       (1<<26)
+#define AFF_SWIM          (1<<27)
+#define AFF_REGENERATION  (1<<28)
+#define AFF_SLOW          (1<<29)
 
 
 /*
@@ -897,53 +859,53 @@ struct kill_data {
  * Extra flags.
  * Used in #OBJECTS.
  */
-#define ITEM_GLOW         (A)
-#define ITEM_HUM          (B)
-#define ITEM_DARK         (C)
-#define ITEM_LOCK         (D)
-#define ITEM_EVIL         (E)
-#define ITEM_INVIS        (F)
-#define ITEM_MAGIC        (G)
-#define ITEM_NODROP       (H)
-#define ITEM_BLESS        (I)
-#define ITEM_ANTI_GOOD    (J)
-#define ITEM_ANTI_EVIL    (K)
-#define ITEM_ANTI_NEUTRAL (L)
-#define ITEM_NOREMOVE     (M)
-#define ITEM_INVENTORY    (N)
-#define ITEM_NOPURGE      (O)
-#define ITEM_ROT_DEATH    (P)
-#define ITEM_VIS_DEATH    (Q)
-#define ITEM_NONMETAL     (S)
-#define ITEM_NOLOCATE     (T)
-#define ITEM_MELT_DROP    (U)
-#define ITEM_HAD_TIMER    (V)
-#define ITEM_SELL_EXTRACT (W)
-#define ITEM_BURN_PROOF   (Y)
-#define ITEM_NOUNCURSE    (Z)
+#define ITEM_GLOW         (1)
+#define ITEM_HUM          (2)
+#define ITEM_DARK         (4)
+#define ITEM_LOCK         (8)
+#define ITEM_EVIL         (16)
+#define ITEM_INVIS        (32)
+#define ITEM_MAGIC        (64)
+#define ITEM_NODROP       (1<<7)
+#define ITEM_BLESS        (1<<8)
+#define ITEM_ANTI_GOOD    (1<<9)
+#define ITEM_ANTI_EVIL    (1<<10)
+#define ITEM_ANTI_NEUTRAL (1<<11)
+#define ITEM_NOREMOVE     (1<<12)
+#define ITEM_INVENTORY    (1<<13)
+#define ITEM_NOPURGE      (1<<14)
+#define ITEM_ROT_DEATH    (1<<15)
+#define ITEM_VIS_DEATH    (1<<16)
+#define ITEM_NONMETAL     (1<<18)
+#define ITEM_NOLOCATE     (1<<19)
+#define ITEM_MELT_DROP    (1<<20)
+#define ITEM_HAD_TIMER    (1<<21)
+#define ITEM_SELL_EXTRACT (1<<22)
+#define ITEM_BURN_PROOF   (1<<24)
+#define ITEM_NOUNCURSE    (1<<25)
 
 
 /*
  * Wear flags.
  * Used in #OBJECTS.
  */
-#define ITEM_TAKE        (A)
-#define ITEM_WEAR_FINGER (B)
-#define ITEM_WEAR_NECK   (C)
-#define ITEM_WEAR_BODY   (D)
-#define ITEM_WEAR_HEAD   (E)
-#define ITEM_WEAR_LEGS   (F)
-#define ITEM_WEAR_FEET   (G)
-#define ITEM_WEAR_HANDS  (H)
-#define ITEM_WEAR_ARMS   (I)
-#define ITEM_WEAR_SHIELD (J)
-#define ITEM_WEAR_ABOUT  (K)
-#define ITEM_WEAR_WAIST  (L)
-#define ITEM_WEAR_WRIST  (M)
-#define ITEM_WIELD       (N)
-#define ITEM_HOLD        (O)
-#define ITEM_NO_SAC      (P)
-#define ITEM_WEAR_FLOAT  (Q)
+#define ITEM_TAKE        (1)
+#define ITEM_WEAR_FINGER (2)
+#define ITEM_WEAR_NECK   (4)
+#define ITEM_WEAR_BODY   (8)
+#define ITEM_WEAR_HEAD   (16)
+#define ITEM_WEAR_LEGS   (32)
+#define ITEM_WEAR_FEET   (64)
+#define ITEM_WEAR_HANDS  (1<<7)
+#define ITEM_WEAR_ARMS   (1<<8)
+#define ITEM_WEAR_SHIELD (1<<9)
+#define ITEM_WEAR_ABOUT  (1<<10)
+#define ITEM_WEAR_WAIST  (1<<11)
+#define ITEM_WEAR_WRIST  (1<<12)
+#define ITEM_WIELD       (1<<13)
+#define ITEM_HOLD        (1<<14)
+#define ITEM_NO_SAC      (1<<15)
+#define ITEM_WEAR_FLOAT  (1<<16)
 
 /* weapon class */
 #define WEAPON_EXOTIC  0
@@ -957,39 +919,39 @@ struct kill_data {
 #define WEAPON_POLEARM 8
 
 /* weapon types */
-#define WEAPON_FLAMING   (A)
-#define WEAPON_FROST     (B)
-#define WEAPON_VAMPIRIC  (C)
-#define WEAPON_SHARP     (D)
-#define WEAPON_VORPAL    (E)
-#define WEAPON_TWO_HANDS (F)
-#define WEAPON_SHOCKING  (G)
-#define WEAPON_POISON    (H)
+#define WEAPON_FLAMING   (1)
+#define WEAPON_FROST     (2)
+#define WEAPON_VAMPIRIC  (4)
+#define WEAPON_SHARP     (8)
+#define WEAPON_VORPAL    (16)
+#define WEAPON_TWO_HANDS (32)
+#define WEAPON_SHOCKING  (64)
+#define WEAPON_POISON    (1<<7)
 
 /* gate flags */
-#define GATE_NORMAL_EXIT (A)
-#define GATE_NOCURSE     (B)
-#define GATE_GOWITH      (C)
-#define GATE_BUGGY       (D)
-#define GATE_RANDOM      (E)
+#define GATE_NORMAL_EXIT (1)
+#define GATE_NOCURSE     (2)
+#define GATE_GOWITH      (4)
+#define GATE_BUGGY       (8)
+#define GATE_RANDOM      (16)
 
 /* furniture flags */
-#define STAND_AT   (A)
-#define STAND_ON   (B)
-#define STAND_IN   (C)
-#define SIT_AT     (D)
-#define SIT_ON     (E)
-#define SIT_IN     (F)
-#define REST_AT    (G)
-#define REST_ON    (H)
-#define REST_IN    (I)
-#define SLEEP_AT   (J)
-#define SLEEP_ON   (K)
-#define SLEEP_IN   (L)
-#define PUT_AT     (M)
-#define PUT_ON     (N)
-#define PUT_IN     (O)
-#define PUT_INSIDE (P)
+#define STAND_AT   (1)
+#define STAND_ON   (2)
+#define STAND_IN   (4)
+#define SIT_AT     (8)
+#define SIT_ON     (16)
+#define SIT_IN     (32)
+#define REST_AT    (64)
+#define REST_ON    (1<<7)
+#define REST_IN    (1<<8)
+#define SLEEP_AT   (1<<9)
+#define SLEEP_ON   (1<<10)
+#define SLEEP_IN   (1<<11)
+#define PUT_AT     (1<<12)
+#define PUT_ON     (1<<13)
+#define PUT_IN     (1<<14)
+#define PUT_INSIDE (1<<15)
 
 
 /*
@@ -1054,21 +1016,21 @@ struct kill_data {
  * Room flags.
  * Used in #ROOMS.
  */
-#define ROOM_DARK    (A)
-#define ROOM_NO_MOB  (C)
-#define ROOM_INDOORS (D)
+#define ROOM_DARK    (1)
+#define ROOM_NO_MOB  (4)
+#define ROOM_INDOORS (8)
 
-#define ROOM_PRIVATE      (J)
-#define ROOM_SAFE         (K)
-#define ROOM_SOLITARY     (L)
-#define ROOM_PET_SHOP     (M)
-#define ROOM_NO_RECALL    (N)
-#define ROOM_IMP_ONLY     (O)
-#define ROOM_GODS_ONLY    (P)
-#define ROOM_HEROES_ONLY  (Q)
-#define ROOM_NEWBIES_ONLY (R)
-#define ROOM_LAW          (S)
-#define ROOM_NOWHERE      (T)
+#define ROOM_PRIVATE      (1<<9)
+#define ROOM_SAFE         (1<<10)
+#define ROOM_SOLITARY     (1<<11)
+#define ROOM_PET_SHOP     (1<<12)
+#define ROOM_NO_RECALL    (1<<13)
+#define ROOM_IMP_ONLY     (1<<14)
+#define ROOM_GODS_ONLY    (1<<15)
+#define ROOM_HEROES_ONLY  (1<<16)
+#define ROOM_NEWBIES_ONLY (1<<17)
+#define ROOM_LAW          (1<<18)
+#define ROOM_NOWHERE      (1<<19)
 
 
 /*
@@ -1087,16 +1049,16 @@ struct kill_data {
  * Exit flags.
  * Used in #ROOMS.
  */
-#define EX_ISDOOR      (A)
-#define EX_CLOSED      (B)
-#define EX_LOCKED      (C)
-#define EX_PICKPROOF   (F)
-#define EX_NOPASS      (G)
-#define EX_EASY        (H)
-#define EX_HARD        (I)
-#define EX_INFURIATING (J)
-#define EX_NOCLOSE     (K)
-#define EX_NOLOCK      (L)
+#define EX_ISDOOR      (1)
+#define EX_CLOSED      (2)
+#define EX_LOCKED      (4)
+#define EX_PICKPROOF   (32)
+#define EX_NOPASS      (64)
+#define EX_EASY        (1<<7)
+#define EX_HARD        (1<<8)
+#define EX_INFURIATING (1<<9)
+#define EX_NOCLOSE     (1<<10)
+#define EX_NOLOCK      (1<<11)
 
 
 /*
@@ -1121,7 +1083,7 @@ struct kill_data {
  * Equpiment wear locations.
  * Used in #RESETS.
  */
-#define WEAR_NONE     -1
+#define WEAR_NONE     (-1)
 #define WEAR_LIGHT    0
 #define WEAR_FINGER_L 1
 #define WEAR_FINGER_R 2
@@ -1177,82 +1139,82 @@ struct kill_data {
 /*
  * ACT bits for players.
  */
-#define PLR_IS_NPC (A) /* Don't EVER set.	*/
+#define PLR_IS_NPC (1) /* Don't EVER set.	*/
 
 /* RT auto flags */
-#define PLR_AUTOASSIST (C)
-#define PLR_AUTOEXIT   (D)
-#define PLR_AUTOLOOT   (E)
-#define PLR_AUTOSAC    (F)
-#define PLR_AUTOGOLD   (G)
-#define PLR_AUTOSPLIT  (H)
+#define PLR_AUTOASSIST (4)
+#define PLR_AUTOEXIT   (8)
+#define PLR_AUTOLOOT   (16)
+#define PLR_AUTOSAC    (32)
+#define PLR_AUTOGOLD   (64)
+#define PLR_AUTOSPLIT  (1<<7)
 
 /* RT personal flags */
-#define PLR_HOLYLIGHT (N)
-#define PLR_CANLOOT   (P)
-#define PLR_NOSUMMON  (Q)
-#define PLR_NOFOLLOW  (R)
+#define PLR_HOLYLIGHT (1<<13)
+#define PLR_CANLOOT   (1<<15)
+#define PLR_NOSUMMON  (1<<16)
+#define PLR_NOFOLLOW  (1<<17)
 /* 2 bits reserved, S-T */
 
 /* penalty flags */
-#define PLR_PERMIT (U)
-#define PLR_LOG    (W)
-#define PLR_DENY   (X)
-#define PLR_FREEZE (Y)
-#define PLR_THIEF  (Z)
-#define PLR_KILLER (aa)
+#define PLR_PERMIT (1<<20)
+#define PLR_LOG    (1<<22)
+#define PLR_DENY   (1<<23)
+#define PLR_FREEZE (1<<24)
+#define PLR_THIEF  (1<<25)
+#define PLR_KILLER (1<<26)
 
 
 /* RT comm flags -- may be used on both mobs and chars */
-#define COMM_QUIET      (A)
-#define COMM_DEAF       (B)
-#define COMM_NOWIZ      (C)
-#define COMM_NOAUCTION  (D)
-#define COMM_NOGOSSIP   (E)
-#define COMM_NOQUESTION (F)
-#define COMM_NOMUSIC    (G)
-#define COMM_NOCLAN     (H)
-#define COMM_NOQUOTE    (I)
-#define COMM_SHOUTSOFF  (J)
+#define COMM_QUIET      (1)
+#define COMM_DEAF       (2)
+#define COMM_NOWIZ      (4)
+#define COMM_NOAUCTION  (8)
+#define COMM_NOGOSSIP   (16)
+#define COMM_NOQUESTION (32)
+#define COMM_NOMUSIC    (64)
+#define COMM_NOCLAN     (1<<7)
+#define COMM_NOQUOTE    (1<<8)
+#define COMM_SHOUTSOFF  (1<<9)
 
 /* display flags */
-#define COMM_COMPACT      (L)
-#define COMM_BRIEF        (M)
-#define COMM_PROMPT       (N)
-#define COMM_COMBINE      (O)
-#define COMM_TELNET_GA    (P)
-#define COMM_SHOW_AFFECTS (Q)
-#define COMM_NOGRATS      (R)
+#define COMM_COMPACT      (1<<11)
+#define COMM_BRIEF        (1<<12)
+#define COMM_PROMPT       (1<<13)
+#define COMM_COMBINE      (1<<14)
+#define COMM_TELNET_GA    (1<<15)
+#define COMM_SHOW_AFFECTS (1<<16)
+#define COMM_NOGRATS      (1<<17)
 
 /* penalties */
-#define COMM_NOEMOTE     (T)
-#define COMM_NOSHOUT     (U)
-#define COMM_NOTELL      (V)
-#define COMM_NOCHANNELS  (W)
-#define COMM_SNOOP_PROOF (Y)
-#define COMM_AFK         (Z)
+#define COMM_NOEMOTE     (1<<19)
+#define COMM_NOSHOUT     (1<<20)
+#define COMM_NOTELL      (1<<21)
+#define COMM_NOCHANNELS  (1<<22)
+#define COMM_SNOOP_PROOF (1<<24)
+#define COMM_AFK         (1<<25)
 
 /* WIZnet flags */
-#define WIZ_ON        (A)
-#define WIZ_TICKS     (B)
-#define WIZ_LOGINS    (C)
-#define WIZ_SITES     (D)
-#define WIZ_LINKS     (E)
-#define WIZ_DEATHS    (F)
-#define WIZ_RESETS    (G)
-#define WIZ_MOBDEATHS (H)
-#define WIZ_FLAGS     (I)
-#define WIZ_PENALTIES (J)
-#define WIZ_SACCING   (K)
-#define WIZ_LEVELS    (L)
-#define WIZ_SECURE    (M)
-#define WIZ_SWITCHES  (N)
-#define WIZ_SNOOPS    (O)
-#define WIZ_RESTORE   (P)
-#define WIZ_LOAD      (Q)
-#define WIZ_NEWBIE    (R)
-#define WIZ_PREFIX    (S)
-#define WIZ_SPAM      (T)
+#define WIZ_ON        (1)
+#define WIZ_TICKS     (2)
+#define WIZ_LOGINS    (4)
+#define WIZ_SITES     (8)
+#define WIZ_LINKS     (16)
+#define WIZ_DEATHS    (32)
+#define WIZ_RESETS    (64)
+#define WIZ_MOBDEATHS (1<<7)
+#define WIZ_FLAGS     (1<<8)
+#define WIZ_PENALTIES (1<<9)
+#define WIZ_SACCING   (1<<10)
+#define WIZ_LEVELS    (1<<11)
+#define WIZ_SECURE    (1<<12)
+#define WIZ_SWITCHES  (1<<13)
+#define WIZ_SNOOPS    (1<<14)
+#define WIZ_RESTORE   (1<<15)
+#define WIZ_LOAD      (1<<16)
+#define WIZ_NEWBIE    (1<<17)
+#define WIZ_PREFIX    (1<<18)
+#define WIZ_SPAM      (1<<19)
 
 /*
  * Prototype for a mob.
@@ -1299,10 +1261,10 @@ struct mob_index_data {
 
 
 /* memory settings */
-#define MEM_CUSTOMER A
-#define MEM_SELLER   B
-#define MEM_HOSTILE  C
-#define MEM_AFRAID   D
+#define MEM_CUSTOMER 1
+#define MEM_SELLER   2
+#define MEM_HOSTILE  4
+#define MEM_AFRAID   8
 
 /* memory for mobs */
 struct mem_data {
@@ -1626,7 +1588,7 @@ struct room_index_data {
  * Must be non-overlapping with spell/skill types,
  * but may be arbitrary beyond that.
  */
-#define TYPE_UNDEFINED -1
+#define TYPE_UNDEFINED (-1)
 #define TYPE_HIT       1000
 
 
@@ -1759,11 +1721,11 @@ extern sh_int gsn_recall;
 
 #define GET_AGE(ch) ((int)(17 + ((ch)->played + current_time - (ch)->logon) / 72000))
 
-#define IS_GOOD(ch)    (ch->alignment >= 350)
-#define IS_EVIL(ch)    (ch->alignment <= -350)
+#define IS_GOOD(ch)    ((ch)->alignment >= 350)
+#define IS_EVIL(ch)    ((ch)->alignment <= -350)
 #define IS_NEUTRAL(ch) (!IS_GOOD(ch) && !IS_EVIL(ch))
 
-#define IS_AWAKE(ch) (ch->position > POS_SLEEPING)
+#define IS_AWAKE(ch) ((ch)->position > POS_SLEEPING)
 #define GET_AC(ch, type) \
     ((ch)->armor[type] + (IS_AWAKE(ch) ? dex_app[get_curr_stat(ch, STAT_DEX)].defensive : 0))
 #define GET_HITROLL(ch) ((ch)->hitroll + str_app[get_curr_stat(ch, STAT_STR)].tohit)
@@ -1837,7 +1799,10 @@ extern char *const               title_table[MAX_CLASS][MAX_LEVEL + 1][2];
  * Global variables.
  */
 extern HELP_DATA *help_first;
+extern HELP_DATA *help_last;
+
 extern SHOP_DATA *shop_first;
+extern SHOP_DATA *shop_last;
 
 extern CHAR_DATA       *char_list;
 extern DESCRIPTOR_DATA *descriptor_list;
@@ -2210,7 +2175,7 @@ struct flag_type {
 
 
 #define MAX_DIR 6
-#define NO_FLAG -99 /* Must not be used in flags or stats. */
+#define NO_FLAG (-99) /* Must not be used in flags or stats. */
 
 
 /*

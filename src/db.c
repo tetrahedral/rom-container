@@ -2569,7 +2569,7 @@ int number_bits(int width)
 static int rgiState[2 + 55];
 #endif
 
-void init_mm()
+void init_mm(void)
 {
 #if defined(OLD_RAND)
     int *piState;

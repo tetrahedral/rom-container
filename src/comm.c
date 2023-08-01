@@ -42,6 +42,7 @@
  * The OS-dependent functions are Read_from_descriptor and Write_to_descriptor.
  * -- Furey  26 Jan 1993
  */
+#include "scripting.h"
 
 #include <sys/time.h>
 #include <sys/types.h>
@@ -83,7 +84,6 @@ extern int malloc_verify(void);
 #include "olc.h"
 #include "recycle.h"
 #include "tables.h"
-#include "scripting.h"
 
 const char echo_off_str[] = {(char)IAC, (char)WILL, (char)TELOPT_ECHO, '\0'};
 const char echo_on_str[]  = {(char)IAC, (char)WONT, (char)TELOPT_ECHO, '\0'};
@@ -136,6 +136,7 @@ static int  init_socket(int port);
 static void init_descriptor(int control);
 static bool read_from_descriptor(DESCRIPTOR_DATA *d);
 static bool write_to_descriptor(int desc, char *txt, int length);
+static void sleep_sync(struct timeval *last_time);
 
 /*
  * Other local functions (OS-independent).
@@ -198,7 +199,7 @@ int main(int argc, char **argv)
 
     boot_db();
 
-    if (script_rt_init() != S_OK) {
+    if (init_scripting_runtime() != S_OK) {
         fprintf(stderr, "script runtime died at init.\n");
         exit(1);
     }
@@ -208,6 +209,8 @@ int main(int argc, char **argv)
 
     game_loop_unix(control);
     close(control);
+
+    close_scripting_runtime();
 
     /*
      * That's all, folks.
@@ -269,12 +272,19 @@ int init_socket(int port)
     return fd;
 }
 
+/* Lack of clean shutdown on interrupt bothered me. */
+static void handle_sigint(int sig)
+{
+    merc_down = true;
+}
+
 void game_loop_unix(int control)
 {
     static struct timeval null_time;
     struct timeval        last_time;
 
     signal(SIGPIPE, SIG_IGN);
+    signal(SIGINT, handle_sigint);
     gettimeofday(&last_time, NULL);
     current_time = (time_t)last_time.tv_sec;
 
@@ -406,47 +416,54 @@ void game_loop_unix(int control)
             }
         }
 
-        /*
-         * Synchronize to a clock.
-         * Sleep( last_time + 1/PULSE_PER_SECOND - now ).
-         * Careful here of signed versus unsigned arithmetic.
-         */
-        {
-            struct timeval now_time;
-            long           secDelta;
-            long           usecDelta;
-
-            gettimeofday(&now_time, NULL);
-            usecDelta =
-                ((int)last_time.tv_usec) - ((int)now_time.tv_usec) + 1000000 / PULSE_PER_SECOND;
-            secDelta = ((int)last_time.tv_sec) - ((int)now_time.tv_sec);
-            while (usecDelta < 0) {
-                usecDelta += 1000000;
-                secDelta -= 1;
-            }
-
-            while (usecDelta >= 1000000) {
-                usecDelta -= 1000000;
-                secDelta += 1;
-            }
-
-            if (secDelta > 0 || (secDelta == 0 && usecDelta > 0)) {
-                struct timeval stall_time;
-
-                stall_time.tv_usec = usecDelta;
-                stall_time.tv_sec  = secDelta;
-                if (select(0, NULL, NULL, NULL, &stall_time) < 0) {
-                    perror("Game_loop: select: stall");
-                    exit(1);
-                }
-            }
-        }
+        sleep_sync(&last_time);
 
         gettimeofday(&last_time, NULL);
         current_time = (time_t)last_time.tv_sec;
     }
 
     return;
+}
+
+/*
+ * Synchronize to a clock.
+ * Sleep( last_time + 1/PULSE_PER_SECOND - now ).
+ * Careful here of signed versus unsigned arithmetic.
+ */
+static void sleep_sync(struct timeval *last_time)
+{
+    struct timeval now_time;
+    long           secDelta;
+    long           usecDelta;
+
+    gettimeofday(&now_time, NULL);
+
+    usecDelta =
+        ((int)last_time->tv_usec) - ((int)now_time.tv_usec) + 1000000 / PULSE_PER_SECOND;
+    secDelta = ((int)last_time->tv_sec) - ((int)now_time.tv_sec);
+    while (usecDelta < 0) {
+        usecDelta += 1000000;
+        secDelta -= 1;
+    }
+
+    while (usecDelta >= 1000000) {
+        usecDelta -= 1000000;
+        secDelta += 1;
+    }
+
+    if (secDelta > 0 || (secDelta == 0 && usecDelta > 0)) {
+        struct timeval stall_time;
+
+        stall_time.tv_usec = usecDelta;
+        stall_time.tv_sec  = secDelta;
+        if (select(0, NULL, NULL, NULL, &stall_time) < 0) {
+            if (errno != EINTR) {
+                perror("Game_loop: select: stall");
+                exit(1);
+            }
+            sleep_sync(last_time);
+        }
+    }
 }
 
 void init_descriptor(int control)
@@ -498,7 +515,7 @@ void init_descriptor(int control)
          * Would be nice to use inet_ntoa here but it takes a struct arg,
          * which ain't very compatible between gcc and system libraries.
          */
-        int addr;
+        uint32_t addr;
 
         addr = ntohl(sock.sin_addr.s_addr);
         sprintf(buf, "%d.%d.%d.%d", (addr >> 24) & 0xFF, (addr >> 16) & 0xFF, (addr >> 8) & 0xFF,

@@ -205,6 +205,12 @@
   },
   {
     "directory": "/workspace/src",
+    "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o scripting_util.o -c /workspace/src/scripting_util.c",
+    "file": "/workspace/src/scripting_util.c",
+    "output": "scripting_util.o"
+  },
+  {
+    "directory": "/workspace/src",
     "command": "/usr/bin/cc  -isystem ../lib/lua/include -std=gnu99 -Wall -Wextra -pedantic -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wmissing-prototypes -Wstrict-prototypes -g -o skills.o -c /workspace/src/skills.c",
     "file": "/workspace/src/skills.c",
     "output": "skills.o"

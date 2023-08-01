@@ -18,7 +18,7 @@ O_FILES = act_comm.o act_enter.o act_info.o act_move.o act_obj.o act_wiz.o \
 		alias.o ban.o comm.o const.o db.o db2.o effects.o fight.o flags.o \
 		handler.o healer.o interp.o note.o lookup.o magic.o magic2.o music.o \
 		recycle.o save.o scan.o skills.o special.o tables.o update.o string.o \
-		mem.o bit.o olc.o olc_act.o olc_save.o script_api.o scripting.o
+		mem.o bit.o olc.o olc_act.o olc_save.o script_api.o scripting.o scripting_util.o
 
 rom: $(O_FILES)
 	$(CC) $(LFLAGS) -o $(ROM_EXE) $(O_FILES) $(LIBS)
@@ -60,8 +60,9 @@ recycle.o: recycle.h merc.h
 recycle.h: merc.h
 save.o: merc.h recycle.h tables.h lookup.h
 scan.o: merc.h
+scripting_util.o: scripting_util.h scripting.h
 script_api.o: script_api.h merc.h
-scripting.o: scripting.h script_api.h merc.h
+scripting.o: scripting.h script_api.h scripting_util.h merc.h
 skills.o: merc.h interp.h magic.h recycle.h
 special.o: merc.h interp.h magic.h db.h
 string.o: merc.h
